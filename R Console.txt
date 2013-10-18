@@ -1,0 +1,346 @@
+
+R version 3.0.1 (2013-05-16) -- "Good Sport"
+Copyright (C) 2013 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin10.8.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[R.app GUI 1.61 (6492) x86_64-apple-darwin10.8.0]
+
+[History restored from /Users/chelsimoy/.Rapp.history]
+
+> setwd("~/dataviz-fall-2013/bike-crash")
+> data <- read.xlsx("Bicycle Collisions")
+Error: could not find function "read.xlsx"
+> data <- read.xlsx("Bicycle Collisions")
+Error: could not find function "read.xlsx"
+> require(xlsx)
+Loading required package: xlsx
+Warning message:
+In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
+  there is no package called ‘xlsx’
+> install.packages(xlsx)
+Error in install.packages(xlsx) : object 'xlsx' not found
+> data <- read.xlsx("Bicycle Collisions.xlsx")
+Error: could not find function "read.xlsx"
+> data <- read.csv("bicycle_collisions.csv")
+Error in read.table(file = file, header = header, sep = sep, quote = quote,  : 
+  no lines available in input
+> data <- read.csv("bicycle_collisions.csv")
+Error in read.table(file = file, header = header, sep = sep, quote = quote,  : 
+  no lines available in input
+> data <- read.csv("bike_collision.csv")
+> head(data)
+  Accident.Number Document.Number collision.type Report.Number Primary.Road Secondary.Road Crossing.Number
+1    7.306062e+12              NA          Other            NA     Ellis St Leavenworth St               0
+2    7.306081e+12              NA          Other            NA     43rd Ave      Rivera St               0
+3    7.306155e+12              NA          Other            NA  Ofarrell St      Larkin St               0
+4    7.306174e+12              NA          Other            NA   Mission St        24th St               0
+5    7.309086e+12              NA          Other            NA      14th St      Market St               0
+6    7.310131e+12              NA          Other            NA      Post St        Hyde St               0
+                   location intersection.number distance direction   date       time   primary.collision.factor
+1 Ellis St & Leavenworth St                   0       2'      West 1/2/00 6:20:00 AM   Other Hazardous Movement
+2      43rd Ave & Rivera St                   0     225'     South 1/2/00 8:10:00 AM           Improper Turning
+3   Ofarrell St & Larkin St                   0       5'      East 1/2/00 3:50:00 PM  Traffic Signals and Signs
+4      Mission St & 24th St                   0     191'     South 1/2/00 5:42:00 PM Unsafe Starting or Backing
+5       14th St & Market St                   0      12'     South 1/5/00 8:55:00 AM           Improper Turning
+6         Post St & Hyde St                   0     265'      East 1/6/00 1:05:00 PM   Other Hazardous Movement
+  vc.violation hit.and.run involved.with highest.degree.of.injury collision.day.of.week party.at.fault number.of.parties
+1   VC 21657.0          No       Bicycle        Complaint of Pain                Sunday              1                 2
+2   VC 22107.0          No       Bicycle     Other Visible Injury                Sunday              1                 2
+3   VC 21453.A          No       Bicycle        Complaint of Pain                Sunday              1                 3
+4   VC 22106.0          No       Bicycle     Other Visible Injury                Sunday              1                 2
+5   VC 22100.B          No       Bicycle     Other Visible Injury             Wednesday              1                 2
+6   VC 21657.0          No       Bicycle     Other Visible Injury              Thursday              1                 2
+  number.injured number.killed weather       road.condition road.surface.condition             lighting
+1              1             0   Clear No Unusual Condition                    Dry Dark - Street Lights
+2              1             0   Clear No Unusual Condition                    Dry             Daylight
+3              1             0   Clear No Unusual Condition                    Dry             Daylight
+4              1             0   Clear No Unusual Condition                    Dry Dark - Street Lights
+5              1             0   Clear No Unusual Condition                    Dry             Daylight
+6              1             0   Clear No Unusual Condition                    Dry             Daylight
+  right.of.way.controls Direction.of.Travel.1 Direction.of.Travel.2 Direction.of.Travel.1.2 Direction.of.Travel.2.2
+1           Functioning                  West                  East                      NA                      NA
+2                  None                  East                 North                      NA                      NA
+3           Functioning                 North                  East                      NA                      NA
+4                  None                 North                 South                      NA                      NA
+5           Functioning                 South                 South                      NA                      NA
+6                  None                  West                  West                      NA                      NA
+  Movement.Preceding.Collision.1 Movement.Preceding.Collision.2 Party.Type.1 Party.Sex.1 Party.Age.1 party.sobriety.1
+1               Making Left Turn            Traveling Wrong Way       Driver        Male          NA             HNBD
+2                  Making U Turn            Proceeding Straight       Driver        Male          70             HNBD
+3               Entering Traffic            Proceeding Straight    Bicyclist        Male          47             HNBD
+4                        Backing            Proceeding Straight       Driver        Male          32             HNBD
+5               Making Left Turn            Proceeding Straight    Bicyclist        Male          30             HNBD
+6            Proceeding Straight           Not Applicable - Ped    Bicyclist        Male          24             HNBD
+  Party.Type.2 Party.Sex.2 Party.Age.2 party.sobriety.2 Party.Number Party.Type Party.Sex Party.Age
+1    Bicyclist        Male          NA             HNBD           NA         NA        NA        NA
+2    Bicyclist        Male          63             HNBD           NA         NA        NA        NA
+3       Driver        Male          46             HNBD           NA         NA        NA        NA
+4    Bicyclist        Male          41             HNBD           NA         NA        NA        NA
+5       Driver      Female          44             HNBD           NA         NA        NA        NA
+6   Pedestrian      Female          45             HNBD           NA         NA        NA        NA
+  Number.of.Victims.This.Party Number.Injured.This.Party Number.Killed.This.Party Extent.of.Injury Direction.of.Travel
+1                           NA                        NA                       NA               NA                  NA
+2                           NA                        NA                       NA               NA                  NA
+3                           NA                        NA                       NA               NA                  NA
+4                           NA                        NA                       NA               NA                  NA
+5                           NA                        NA                       NA               NA                  NA
+6                           NA                        NA                       NA               NA                  NA
+  Movement.Preceding.Collision Party.Sobriety Drugs Party.Violation.Category Associated.Cause.1 Associated.Cause.2
+1                           NA             NA    NA                       NA      None Apparent      None Apparent
+2                           NA             NA    NA                       NA        None Stated        None Stated
+3                           NA             NA    NA                       NA        None Stated      None Apparent
+4                           NA             NA    NA                       NA      None Apparent      None Apparent
+5                           NA             NA    NA                       NA        None Stated        None Stated
+6                           NA             NA    NA                       NA        None Stated          Violation
+  Associated.Cause.3 Vehicle.Year Vehicle.Make Vehicle.Type city.name First.Name Last.Name      pedestrian.action
+1                 NA           NA           NA           NA        NA         NA        NA No Pedestrian Involved
+2                 NA           NA           NA           NA        NA         NA        NA No Pedestrian Involved
+3                 NA           NA           NA           NA        NA         NA        NA No Pedestrian Involved
+4                 NA           NA           NA           NA        NA         NA        NA No Pedestrian Involved
+5                 NA           NA           NA           NA        NA         NA        NA No Pedestrian Involved
+6                 NA           NA           NA           NA        NA         NA        NA                In Road
+  Vehicle.Type.1 Vehicle.Type.2 Property.Damage.Owner distance.value Utility.Field Custom.Text poi.1 poi.2 Officer.ID
+1          Truck        Bicycle                    NA              0            NA          NA    NA    NA      00022
+2  Passenger Car        Bicycle                    NA              0            NA          NA    NA    NA      00866
+3        Bicycle   Pickup Truck                    NA              0            NA          NA    NA    NA      02232
+4  Passenger Car        Bicycle                    NA              0            NA          NA    NA    NA      01528
+5        Bicycle  Passenger Car                    NA              0            NA          NA    NA    NA      00125
+6        Bicycle     Pedestrian                    NA              0            NA          NA    NA    NA      00380
+  Record.Verified       x       y YesNo      Node.Number Path                     Segment.Number
+1              NA 6008464 2113832 FALSE 6008466, 2113832   NA 6008466, 2113832, 6007990, 2113766
+2              NA 5982965 2099932 FALSE 5982957, 2100157   NA 5982981, 2099479, 5982957, 2100157
+3              NA 6007472 2114039 FALSE 6007467, 2114038   NA 6007943, 2114104, 6007467, 2114038
+4              NA 6007075 2101863 FALSE 6007064, 2102054   NA 6007097, 2101471, 6007064, 2102054
+5              NA 6004240 2107757 FALSE 6004228, 2107756   NA 6004458, 2107772, 6004228, 2107756
+6              NA 6008109 2114823 FALSE 6007847, 2114787   NA 6008323, 2114853, 6007847, 2114787
+> max(data)
+Error in FUN(X[[1L]], ...) : 
+  only defined on a data frame with all numeric variables
+> names(data)
+ [1] "Accident.Number"                "Document.Number"                "collision.type"                 "Report.Number"                 
+ [5] "Primary.Road"                   "Secondary.Road"                 "Crossing.Number"                "location"                      
+ [9] "intersection.number"            "distance"                       "direction"                      "date"                          
+[13] "time"                           "primary.collision.factor"       "vc.violation"                   "hit.and.run"                   
+[17] "involved.with"                  "highest.degree.of.injury"       "collision.day.of.week"          "party.at.fault"                
+[21] "number.of.parties"              "number.injured"                 "number.killed"                  "weather"                       
+[25] "road.condition"                 "road.surface.condition"         "lighting"                       "right.of.way.controls"         
+[29] "Direction.of.Travel.1"          "Direction.of.Travel.2"          "Direction.of.Travel.1.2"        "Direction.of.Travel.2.2"       
+[33] "Movement.Preceding.Collision.1" "Movement.Preceding.Collision.2" "Party.Type.1"                   "Party.Sex.1"                   
+[37] "Party.Age.1"                    "party.sobriety.1"               "Party.Type.2"                   "Party.Sex.2"                   
+[41] "Party.Age.2"                    "party.sobriety.2"               "Party.Number"                   "Party.Type"                    
+[45] "Party.Sex"                      "Party.Age"                      "Number.of.Victims.This.Party"   "Number.Injured.This.Party"     
+[49] "Number.Killed.This.Party"       "Extent.of.Injury"               "Direction.of.Travel"            "Movement.Preceding.Collision"  
+[53] "Party.Sobriety"                 "Drugs"                          "Party.Violation.Category"       "Associated.Cause.1"            
+[57] "Associated.Cause.2"             "Associated.Cause.3"             "Vehicle.Year"                   "Vehicle.Make"                  
+[61] "Vehicle.Type"                   "city.name"                      "First.Name"                     "Last.Name"                     
+[65] "pedestrian.action"              "Vehicle.Type.1"                 "Vehicle.Type.2"                 "Property.Damage.Owner"         
+[69] "distance.value"                 "Utility.Field"                  "Custom.Text"                    "poi.1"                         
+[73] "poi.2"                          "Officer.ID"                     "Record.Verified"                "x"                             
+[77] "y"                              "YesNo"                          "Node.Number"                    "Path"                          
+[81] "Segment.Number"                
+> sundayData <- subset(data, day.of.week == "Sunday")
+Error in eval(expr, envir, enclos) : object 'day.of.week' not found
+> sundayData <- subset(data, day.of.week == "Sunday")
+Error in eval(expr, envir, enclos) : object 'day.of.week' not found
+> sundayData <- subset(data, collision.day.of.week == "Sunday")
+> head(data)
+  Accident.Number Document.Number collision.type Report.Number Primary.Road Secondary.Road Crossing.Number                  location
+1    7.306062e+12              NA          Other            NA     Ellis St Leavenworth St               0 Ellis St & Leavenworth St
+2    7.306081e+12              NA          Other            NA     43rd Ave      Rivera St               0      43rd Ave & Rivera St
+3    7.306155e+12              NA          Other            NA  Ofarrell St      Larkin St               0   Ofarrell St & Larkin St
+4    7.306174e+12              NA          Other            NA   Mission St        24th St               0      Mission St & 24th St
+5    7.309086e+12              NA          Other            NA      14th St      Market St               0       14th St & Market St
+6    7.310131e+12              NA          Other            NA      Post St        Hyde St               0         Post St & Hyde St
+  intersection.number distance direction   date       time   primary.collision.factor vc.violation hit.and.run involved.with
+1                   0       2'      West 1/2/00 6:20:00 AM   Other Hazardous Movement   VC 21657.0          No       Bicycle
+2                   0     225'     South 1/2/00 8:10:00 AM           Improper Turning   VC 22107.0          No       Bicycle
+3                   0       5'      East 1/2/00 3:50:00 PM  Traffic Signals and Signs   VC 21453.A          No       Bicycle
+4                   0     191'     South 1/2/00 5:42:00 PM Unsafe Starting or Backing   VC 22106.0          No       Bicycle
+5                   0      12'     South 1/5/00 8:55:00 AM           Improper Turning   VC 22100.B          No       Bicycle
+6                   0     265'      East 1/6/00 1:05:00 PM   Other Hazardous Movement   VC 21657.0          No       Bicycle
+  highest.degree.of.injury collision.day.of.week party.at.fault number.of.parties number.injured number.killed weather       road.condition
+1        Complaint of Pain                Sunday              1                 2              1             0   Clear No Unusual Condition
+2     Other Visible Injury                Sunday              1                 2              1             0   Clear No Unusual Condition
+3        Complaint of Pain                Sunday              1                 3              1             0   Clear No Unusual Condition
+4     Other Visible Injury                Sunday              1                 2              1             0   Clear No Unusual Condition
+5     Other Visible Injury             Wednesday              1                 2              1             0   Clear No Unusual Condition
+6     Other Visible Injury              Thursday              1                 2              1             0   Clear No Unusual Condition
+  road.surface.condition             lighting right.of.way.controls Direction.of.Travel.1 Direction.of.Travel.2 Direction.of.Travel.1.2
+1                    Dry Dark - Street Lights           Functioning                  West                  East                      NA
+2                    Dry             Daylight                  None                  East                 North                      NA
+3                    Dry             Daylight           Functioning                 North                  East                      NA
+4                    Dry Dark - Street Lights                  None                 North                 South                      NA
+5                    Dry             Daylight           Functioning                 South                 South                      NA
+6                    Dry             Daylight                  None                  West                  West                      NA
+  Direction.of.Travel.2.2 Movement.Preceding.Collision.1 Movement.Preceding.Collision.2 Party.Type.1 Party.Sex.1 Party.Age.1
+1                      NA               Making Left Turn            Traveling Wrong Way       Driver        Male          NA
+2                      NA                  Making U Turn            Proceeding Straight       Driver        Male          70
+3                      NA               Entering Traffic            Proceeding Straight    Bicyclist        Male          47
+4                      NA                        Backing            Proceeding Straight       Driver        Male          32
+5                      NA               Making Left Turn            Proceeding Straight    Bicyclist        Male          30
+6                      NA            Proceeding Straight           Not Applicable - Ped    Bicyclist        Male          24
+  party.sobriety.1 Party.Type.2 Party.Sex.2 Party.Age.2 party.sobriety.2 Party.Number Party.Type Party.Sex Party.Age
+1             HNBD    Bicyclist        Male          NA             HNBD           NA         NA        NA        NA
+2             HNBD    Bicyclist        Male          63             HNBD           NA         NA        NA        NA
+3             HNBD       Driver        Male          46             HNBD           NA         NA        NA        NA
+4             HNBD    Bicyclist        Male          41             HNBD           NA         NA        NA        NA
+5             HNBD       Driver      Female          44             HNBD           NA         NA        NA        NA
+6             HNBD   Pedestrian      Female          45             HNBD           NA         NA        NA        NA
+  Number.of.Victims.This.Party Number.Injured.This.Party Number.Killed.This.Party Extent.of.Injury Direction.of.Travel
+1                           NA                        NA                       NA               NA                  NA
+2                           NA                        NA                       NA               NA                  NA
+3                           NA                        NA                       NA               NA                  NA
+4                           NA                        NA                       NA               NA                  NA
+5                           NA                        NA                       NA               NA                  NA
+6                           NA                        NA                       NA               NA                  NA
+  Movement.Preceding.Collision Party.Sobriety Drugs Party.Violation.Category Associated.Cause.1 Associated.Cause.2 Associated.Cause.3
+1                           NA             NA    NA                       NA      None Apparent      None Apparent                 NA
+2                           NA             NA    NA                       NA        None Stated        None Stated                 NA
+3                           NA             NA    NA                       NA        None Stated      None Apparent                 NA
+4                           NA             NA    NA                       NA      None Apparent      None Apparent                 NA
+5                           NA             NA    NA                       NA        None Stated        None Stated                 NA
+6                           NA             NA    NA                       NA        None Stated          Violation                 NA
+  Vehicle.Year Vehicle.Make Vehicle.Type city.name First.Name Last.Name      pedestrian.action Vehicle.Type.1 Vehicle.Type.2
+1           NA           NA           NA        NA         NA        NA No Pedestrian Involved          Truck        Bicycle
+2           NA           NA           NA        NA         NA        NA No Pedestrian Involved  Passenger Car        Bicycle
+3           NA           NA           NA        NA         NA        NA No Pedestrian Involved        Bicycle   Pickup Truck
+4           NA           NA           NA        NA         NA        NA No Pedestrian Involved  Passenger Car        Bicycle
+5           NA           NA           NA        NA         NA        NA No Pedestrian Involved        Bicycle  Passenger Car
+6           NA           NA           NA        NA         NA        NA                In Road        Bicycle     Pedestrian
+  Property.Damage.Owner distance.value Utility.Field Custom.Text poi.1 poi.2 Officer.ID Record.Verified       x       y YesNo
+1                    NA              0            NA          NA    NA    NA      00022              NA 6008464 2113832 FALSE
+2                    NA              0            NA          NA    NA    NA      00866              NA 5982965 2099932 FALSE
+3                    NA              0            NA          NA    NA    NA      02232              NA 6007472 2114039 FALSE
+4                    NA              0            NA          NA    NA    NA      01528              NA 6007075 2101863 FALSE
+5                    NA              0            NA          NA    NA    NA      00125              NA 6004240 2107757 FALSE
+6                    NA              0            NA          NA    NA    NA      00380              NA 6008109 2114823 FALSE
+       Node.Number Path                     Segment.Number
+1 6008466, 2113832   NA 6008466, 2113832, 6007990, 2113766
+2 5982957, 2100157   NA 5982981, 2099479, 5982957, 2100157
+3 6007467, 2114038   NA 6007943, 2114104, 6007467, 2114038
+4 6007064, 2102054   NA 6007097, 2101471, 6007064, 2102054
+5 6004228, 2107756   NA 6004458, 2107772, 6004228, 2107756
+6 6007847, 2114787   NA 6008323, 2114853, 6007847, 2114787
+> head(sundayData)
+   Accident.Number Document.Number collision.type Report.Number Primary.Road Secondary.Road Crossing.Number                  location
+1     7.306062e+12              NA          Other            NA     Ellis St Leavenworth St               0 Ellis St & Leavenworth St
+2     7.306081e+12              NA          Other            NA     43rd Ave      Rivera St               0      43rd Ave & Rivera St
+3     7.306155e+12              NA          Other            NA  Ofarrell St      Larkin St               0   Ofarrell St & Larkin St
+4     7.306174e+12              NA          Other            NA   Mission St        24th St               0      Mission St & 24th St
+9     7.313163e+12              NA          Other            NA  Edinburg St     Persia Ave               0  Edinburg St & Persia Ave
+34    7.348025e+12              NA          Other            NA      18th St    Guerrero St               0     18th St & Guerrero St
+   intersection.number distance direction    date       time   primary.collision.factor vc.violation hit.and.run involved.with
+1                    0       2'      West  1/2/00 6:20:00 AM   Other Hazardous Movement   VC 21657.0          No       Bicycle
+2                    0     225'     South  1/2/00 8:10:00 AM           Improper Turning   VC 22107.0          No       Bicycle
+3                    0       5'      East  1/2/00 3:50:00 PM  Traffic Signals and Signs   VC 21453.A          No       Bicycle
+4                    0     191'     South  1/2/00 5:42:00 PM Unsafe Starting or Backing   VC 22106.0          No       Bicycle
+9                    0      10'     North  1/9/00 4:31:00 PM               Unsafe Speed   VC 22350.0          No Non-Collision
+34                   0     130'      West 2/13/00 2:45:00 AM   Other Hazardous Movement   VC 22517.0          No       Bicycle
+   highest.degree.of.injury collision.day.of.week party.at.fault number.of.parties number.injured number.killed weather
+1         Complaint of Pain                Sunday              1                 2              1             0   Clear
+2      Other Visible Injury                Sunday              1                 2              1             0   Clear
+3         Complaint of Pain                Sunday              1                 3              1             0   Clear
+4      Other Visible Injury                Sunday              1                 2              1             0   Clear
+9      Other Visible Injury                Sunday              1                 1              1             0   Clear
+34        Complaint of Pain                Sunday              1                 2              1             0 Raining
+         road.condition road.surface.condition             lighting right.of.way.controls Direction.of.Travel.1 Direction.of.Travel.2
+1  No Unusual Condition                    Dry Dark - Street Lights           Functioning                  West                  East
+2  No Unusual Condition                    Dry             Daylight                  None                  East                 North
+3  No Unusual Condition                    Dry             Daylight           Functioning                 North                  East
+4  No Unusual Condition                    Dry Dark - Street Lights                  None                 North                 South
+9  No Unusual Condition                    Dry             Daylight                  None                 North                      
+34 No Unusual Condition                    Wet Dark - Street Lights                  None                  West                  West
+   Direction.of.Travel.1.2 Direction.of.Travel.2.2 Movement.Preceding.Collision.1 Movement.Preceding.Collision.2 Party.Type.1 Party.Sex.1
+1                       NA                      NA               Making Left Turn            Traveling Wrong Way       Driver        Male
+2                       NA                      NA                  Making U Turn            Proceeding Straight       Driver        Male
+3                       NA                      NA               Entering Traffic            Proceeding Straight    Bicyclist        Male
+4                       NA                      NA                        Backing            Proceeding Straight       Driver        Male
+9                       NA                      NA              Making Right Turn                                   Bicyclist        Male
+34                      NA                      NA                Stopped in Road            Proceeding Straight       Driver        Male
+   Party.Age.1 party.sobriety.1 Party.Type.2 Party.Sex.2 Party.Age.2 party.sobriety.2 Party.Number Party.Type Party.Sex Party.Age
+1           NA             HNBD    Bicyclist        Male          NA             HNBD           NA         NA        NA        NA
+2           70             HNBD    Bicyclist        Male          63             HNBD           NA         NA        NA        NA
+3           47             HNBD       Driver        Male          46             HNBD           NA         NA        NA        NA
+4           32             HNBD    Bicyclist        Male          41             HNBD           NA         NA        NA        NA
+9           39             HNBD                                   NA                            NA         NA        NA        NA
+34          46             HNBD    Bicyclist        Male          31             HNBD           NA         NA        NA        NA
+   Number.of.Victims.This.Party Number.Injured.This.Party Number.Killed.This.Party Extent.of.Injury Direction.of.Travel
+1                            NA                        NA                       NA               NA                  NA
+2                            NA                        NA                       NA               NA                  NA
+3                            NA                        NA                       NA               NA                  NA
+4                            NA                        NA                       NA               NA                  NA
+9                            NA                        NA                       NA               NA                  NA
+34                           NA                        NA                       NA               NA                  NA
+   Movement.Preceding.Collision Party.Sobriety Drugs Party.Violation.Category Associated.Cause.1 Associated.Cause.2 Associated.Cause.3
+1                            NA             NA    NA                       NA      None Apparent      None Apparent                 NA
+2                            NA             NA    NA                       NA        None Stated        None Stated                 NA
+3                            NA             NA    NA                       NA        None Stated      None Apparent                 NA
+4                            NA             NA    NA                       NA      None Apparent      None Apparent                 NA
+9                            NA             NA    NA                       NA        None Stated                                    NA
+34                           NA             NA    NA                       NA      None Apparent          Violation                 NA
+   Vehicle.Year Vehicle.Make Vehicle.Type city.name First.Name Last.Name      pedestrian.action Vehicle.Type.1 Vehicle.Type.2
+1            NA           NA           NA        NA         NA        NA No Pedestrian Involved          Truck        Bicycle
+2            NA           NA           NA        NA         NA        NA No Pedestrian Involved  Passenger Car        Bicycle
+3            NA           NA           NA        NA         NA        NA No Pedestrian Involved        Bicycle   Pickup Truck
+4            NA           NA           NA        NA         NA        NA No Pedestrian Involved  Passenger Car        Bicycle
+9            NA           NA           NA        NA         NA        NA No Pedestrian Involved        Bicycle               
+34           NA           NA           NA        NA         NA        NA No Pedestrian Involved  Passenger Car        Bicycle
+   Property.Damage.Owner distance.value Utility.Field Custom.Text poi.1 poi.2 Officer.ID Record.Verified       x       y YesNo
+1                     NA              0            NA          NA    NA    NA      00022              NA 6008464 2113832 FALSE
+2                     NA              0            NA          NA    NA    NA      00866              NA 5982965 2099932 FALSE
+3                     NA              0            NA          NA    NA    NA      02232              NA 6007472 2114039 FALSE
+4                     NA              0            NA          NA    NA    NA      01528              NA 6007075 2101863 FALSE
+9                     NA              0            NA          NA    NA    NA      01439              NA 6002916 2090857 FALSE
+34                    NA              0            NA          NA    NA    NA      00603              NA 6005456 2105474 FALSE
+        Node.Number Path                     Segment.Number
+1  6008466, 2113832   NA 6008466, 2113832, 6007990, 2113766
+2  5982957, 2100157   NA 5982981, 2099479, 5982957, 2100157
+3  6007467, 2114038   NA 6007943, 2114104, 6007467, 2114038
+4  6007064, 2102054   NA 6007097, 2101471, 6007064, 2102054
+9  6002911, 2090849   NA 6003262, 2091405, 6002911, 2090849
+34 6005586, 2105481   NA 6005586, 2105481, 6005231, 2105461
+> length(sundayData)
+[1] 81
+> lenght(data)
+Error: could not find function "lenght"
+> length(data)
+[1] 81
+> length(sundayData)
+[1] 81
+> nrow(sundayData)
+[1] 517
+> nrow(data)
+[1] 5133
+> mondayData <- subset(data, collision.day.of.week == "Monday")
+> nrow(mondayData)
+[1] 735
+> tuesdayData <- subset(data, collision.day.of.week == "Tuesday")
+> nrow(tuesdayData)
+[1] 826
+> wednesdayData <- subset(data, collision.day.of.week == "Wednesday")
+> nrow(wednesdayData)
+[1] 839
+> thursdayData <- subset(data, collision.day.of.week == "Thursday")
+> nrow(thursdayData)
+[1] 848
+> fridayData <- subset(data, collision.day.of.week == "Friday")
+> nrow(fridayData)
+[1] 775
+> saturdayData <- subset(data, collision.day.of.week == "Saturday")
+> nrow(saturdayData)
+[1] 593
+> 

@@ -1,0 +1,25 @@
+setwd("~/dataviz-fall-2013/bike-crash")
+data <- read.csv("bike_collision.csv")
+sundayData <- subset(data, collision.day.of.week == "Sunday")
+nrow(sundayData)
+[1] 517
+> nrow(data)
+[1] 5133
+> mondayData <- subset(data, collision.day.of.week == "Monday")
+> nrow(mondayData)
+[1] 735
+> tuesdayData <- subset(data, collision.day.of.week == "Tuesday")
+> nrow(tuesdayData)
+[1] 826
+> wednesdayData <- subset(data, collision.day.of.week == "Wednesday")
+> nrow(wednesdayData)
+[1] 839
+> thursdayData <- subset(data, collision.day.of.week == "Thursday")
+> nrow(thursdayData)
+[1] 848
+> fridayData <- subset(data, collision.day.of.week == "Friday")
+> nrow(fridayData)
+[1] 775
+> saturdayData <- subset(data, collision.day.of.week == "Saturday")
+> nrow(saturdayData)
+[1] 593
