@@ -58,7 +58,11 @@
 	  });
 			
      
-		
+		svg.append("path")
+	     .datum(topojson.feature(us, us.objects.land))
+	     .attr("class", "land")
+	     .attr("d", path);
+	 
 
      
 		
