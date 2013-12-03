@@ -1,0 +1,18 @@
+#step 1
+
+make your date field a real date
+
+?as.Date
+#formatting dates in R
+
+data$formatDate <- as.Date(as.character(data$date, format="XXXX"))
+
+womenByDate <- aggregate(women$date, list(women$date), length)
+
+names(asmsk)<- c("date", "accidentsWoMen")
+
+merge 
+
+
+
+

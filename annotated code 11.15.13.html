@@ -1,0 +1,25 @@
+#aggregating on the day and month as opposed to the month and year
+
+setwd('~/dataviz-fall-2013/bike-crash/')
+#Load data
+data <- read.csv('bike_collision.csv', stringsAsFactors=F)
+
+#making the "date" column actual dates
+data$newDate <- as.Date(data$date, format='%m/%d/%y')
+
+#Dropping the year out of the data
+format(data$newDate, format="%m/%d")
+
+#saving it in a new field
+month_day_date <- format(data$newDate, format="%m/%d")
+
+#Need to aggregate the crashes per date (now month and day)
+accidents <- aggregate(data$month_day_Date, list(data$month_day_Date), length)
+
+#and change the name fields
+names(accidents) <- c("date", "crashes")
+
+#We need to for some reason reformat -- theres years in the field
+format(accidents$date, format="%m/%d")
+
+
