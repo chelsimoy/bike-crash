@@ -10,63 +10,157 @@
 	<style type="text/css" media="screen">
 	
 	
+	.accident {
+		fill: orange;
+		stroke: magenta;
+	}
+	
+	.county{
+		fill: gray;
+		fill-opacity: 0.25;
+		stroke: white;
+	}
+	
+	.hexagon {
+		fill: red;
+		stroke: white;
+	}
 	
 	
+	
+	#title{
+		color: steelblue;
+		height: 100px;
+		width: 600px;
+		font-size: 33px;
+		font-family: "Helvetica Neue", sans-serif;
+		position: absolute;
+		margin: 25px;
+		top: 50px;
+		left: 775px;
+		font-weight: 300;
+		letter-spacing: -2px;
+
+	}
+	#title span{
+		/*left: 100px;*/
+		position: relative;
+		left: 150px;
+		/*width: 600px;
+				height: 100px;
+				left: 0px;*/
+	}
+		
+	#text{
+		position: absolute;
+		height: 500px;
+		width: 500px;
+		top: 150px;
+		left: 775px;
+		margin: 25px;
+		font-family: "Helvetica Neue", sans-serif;
+	}	
 		
 	</style>
 </head>
 <body>
 	<script type="text/javascript" charset="utf-8">
 		
-		var margin = {top: 20, right: 20, bottom: 20, left: 20}
-				width  = 750 - margin.left - margin.right, 
-				height = 500 - margin.top - margin.bottom;
-				
-		var color = d3.time.scale()
-				.domain([new Date(2000, 0, 1), (2012, 0, 1)])
-				.range(["black", "steelblue"])
-				.interpolate(d3.interpolatelab);
+var margin = {top: 20, right: 20, bottom: 20, left: 20}
+		width  = 750 - margin.left - margin.right, 
+		height = 700 - margin.top - margin.bottom;
 		
-		var hexbin = d3.hexbin()
-			 .size([width, height])
-  	   .radius(8);
-			
-	  var radius = d3.scale.sqrt()
-			 .domain([0, 12])
-		   .range([0, 8]);	
+var color = d3.scale.linear()
+		.domain([0, 150])
+		.range(["steelblue", "#AB2B52"]);
 		
-	  var projection = d3.geo.albers()
-			  .scale(1000)
-			  .translate([width / 2, height / 2])
-			  .precision(.1);
-				
-		var path = d3.geo.path()
-				.projection(projection);	
-		
-		var svg = d3.select("body").append("svg")
-				.attr("width", width)
-		    .attr("height", height);	
-		
+var hexbin = d3.hexbin()
+		.size([width, height])
+		.x(function(d) { return d.px; })
+		.y(function(d) { return d.py; })
+		.radius(12);
 	
-		d3.csv('bike_collisions.csv', function(d){
-			
-	  
-	  data.forEach(function(d){
-		var p   = projection(d);
-			  d[0] = p[0], d[1] = p[1];
-			  d.location = parseFloat(d.location)
-	  });
-			
-     
-		svg.append("path")
-	     .datum(topojson.feature(us, us.objects.land))
-	     .attr("class", "land")
-	     .attr("d", path);
-	 
+var radius = d3.scale.sqrt()
+		.domain([0, 50])
+		.range([0, 8]);	
 
-     
+var projection = d3.geo.albers()
+	  .scale(1000)
+	  .translate([width / 2, height / 2])
+	  .precision(.1);
 		
-	</script>
+var path = d3.geo.path()
+		.projection(projection);	
+
+var svg = d3.select("body").append("svg")
+		.attr("width", width)
+		.attr("height", height)
+		.append('g')
+		.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+queue()
+	.defer(d3.csv, "dataWithLatLon.csv")
+	.defer(d3.json, "planning_neighborhoods.geojson")
+	.await(ready);
+	
+function ready (error, bike, sf) {
+	
+	//now we need a projection
+  var projection = d3.geo.mercator()
+		  .translate([width / 2, height / 2])
+			.center([-122.4453, 37.7422])
+		  .scale(200000);
+		
+	bike.forEach(function(d) {
+		d.lat = +d.lat;
+		d.lon = +d.lon;
+		var p = projection([d.lat, d.lon]);
+		d.px = p[0];
+		d.py = p[1];
+	})
+	
+  //and now to create a path that draws the data on the projection
+  var path = d3.geo.path()
+		   .projection(projection);
+
+	 svg.selectAll(".county")
+       .data(sf.features)
+       .enter().append("path")
+       .attr("class", "county")
+       .attr("d", path)
+       // .style("stroke", "red");
+
+		// var accident = svg.selectAll(".accident")
+		// 		.data(bike)
+		// 	.enter().append("circle")
+		// 		.attr("class", "accident")
+		// 		.attr("r", 3)
+		// 		.attr("transform", function(d) { return "translate(" + d.px + "," + d.py + ")"; })
+				
+		var hexagonGroup = svg.append('g')
+				 		.attr("class", "hexagons");
+				
+		hexagonGroup.selectAll('.hexagon')
+						.data(hexbin(bike))
+						.enter().append('path')
+						.attr("class", "hexagon")
+						.attr('d', function (d) {return hexbin.hexagon(radius(d.length));})
+						.attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")";})
+						.on("mouseover", function(d) { console.log(d.length); })	
+						.style("fill", function(d) {return color( d.length ); })
+}
+
+</script>
+
+<div>
+	<h1 id="title">San Francisco Bicycle Injury Accidents<span><br> 2000- 2011</br></span> </h1> 
+	<p id="text">Lorem IpsumdnfioasnfiaosdfionsiLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+	
+</div>	
+	
 	
 </body>
 </html>
+
+
+
