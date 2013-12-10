@@ -26,20 +26,64 @@
 		stroke: white;
 	}
 	
+		.my-legend {
+			position: absolute;
+			top: 550px;	
+			left: 775px;
+		
+	  	}
 	
+			.my-legend .legend-title {
+		    text-align: left;
+		    margin-bottom: 8px;
+		    font-weight: 300;
+		    font-size: 90%;
+				font-family: "Helevetica Neue", sans-serif;
+		    }
+	  
+	  .my-legend .legend-scale ul {
+	    margin: 0;
+	    padding: 0;
+	    float: left;
+	    list-style: none;
+	    }
+	  .my-legend .legend-scale ul li {
+	    display: block;
+	    float: left;
+	    width: 50px;
+			
+	    margin-bottom: 6px;
+	    text-align: left;
+	    font-size: 60%;
+	    list-style: none;
+	    }
+	  .my-legend ul.legend-labels li span {
+	    display: block;
+	    float: left;
+	    height: 15px;
+	    width: 50px;
+			font-size: 90%;
+			font-family: "Helevetica Neue", sans-serif;
+	    }
+	  .my-legend a {
+	    color: #777;
+	    }
+	
+	.words{
+		display: inline-block;
+		height: 100px;
+		width: 550px;
+		float: left;
+		margin-left: 50px;
+		
+	}
 	
 	#title{
 		color: steelblue;
-		height: 100px;
-		width: 600px;
 		font-size: 33px;
 		font-family: "Helvetica Neue", sans-serif;
-		position: absolute;
-		margin: 25px;
-		top: 50px;
-		left: 775px;
 		font-weight: 300;
-		letter-spacing: -2px;
+		letter-spacing: -1px;
 
 	}
 	#title span{
@@ -52,18 +96,56 @@
 	}
 		
 	#text{
-		position: absolute;
-		height: 500px;
-		width: 500px;
-		top: 150px;
-		left: 775px;
-		margin: 25px;
 		font-family: "Helvetica Neue", sans-serif;
+		line-height: 25px;
 	}	
+	
+	#map1{
+		position: absolute;
+		top: 800px;
+		left: 850px;
+	}
+	
+	#map2{
+		display: inline-block;
+		float: left;
+		left: 50px;
+		
+	}
+	
+	#title_map2{
+		font-family:"Helvetica Neue", sans-serif;
+		font-weight: bold;
+		left: 50px;
+		position: relative;
+		color: steelblue;
+	}
+	
+	#graycrosses{
+		font-weight: 300;
+		font-size: 15px;
+		color: black;
+	}
+	#circles{
+		color:#a82e55 ;
+	}
 		
 	</style>
 </head>
 <body>
+	
+	<div class="words">
+		<h1 id="title">San Francisco Bicycle Injury Accidents<span><br> 2000 - 2011</br></span> </h1> 
+		<p id="text">The number of bicycle-injury accidents in San Francisco increased 55 percent between 2000 and 2011 with the highest number of crashes occurring in 2010 with 629. Most of the crashes occurred on Market, Mission and Valencia streets. Crashes occurred most often at intersections and during commuting hours around 8:30 a.m. or 6 p.m. <br><br>
+
+		Of the 5133 crashes recorded during this time period, 26 resulted in fatalities. <br><br>
+
+		Crashes occurred slightly more frequently on Thursday than any other day of the week and more often than not, on clear or slightly cloudy days with normal road conditions. <br><br>
+
+		About half of the time, bicyclists are at fault for the crash. The other half, drivers are at fault. Below is graph showing the percent change of who is at fault in bicycle-injury crashes, according to data compiled from San Francisco police reports. 
+		 </p>
+	</div>
+	
 	<script type="text/javascript" charset="utf-8">
 		
 var margin = {top: 20, right: 20, bottom: 20, left: 20}
@@ -152,12 +234,37 @@ function ready (error, bike, sf) {
 
 </script>
 
-<div>
-	<h1 id="title">San Francisco Bicycle Injury Accidents<span><br> 2000- 2011</br></span> </h1> 
-	<p id="text">Lorem IpsumdnfioasnfiaosdfionsiLorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
 	
+
+<div class="my-legend">
+	<div class='legend-title'>Number of crashes</div>
+	<div class='legend-scale'>
+	  <ul class='legend-labels'>
+	    <li><span style='background:#4880b2;'></span>0</li>
+			<li><span style='background:#5377a8;'></span>20</li>
+			<li><span style='background:#616b9a;'></span>40</li>
+	    <li><span style='background:#6e608d;'></span>60</li>
+	    <li><span style='background:#7b5581;'></span>80</li> 
+	   	<li><span style='background:#894873;'></span>100</li>
+			<li><span style='background:#973c65;'></span>120</li>
+	    <li><span style='background:#9e365e;'></span>130</li>
+			<li><span style='background:#a82e55;'></span>150</li>
+	  </ul>
+	</div>
 </div>	
+
+<div id="map1"> 
+	<img src="maps/20131209_AtFault_Final.png" width="400" height="400" alt="20131209 AtFault Final">
+	<img src="maps/legend_at_Fault_rate.png" width="150" height="200" alt="Legend At Fault Rate">
+</div>
+
+<div id="map2">
+	<p id="title_map2"> Bicycle Fatalities <br><span id="graycrosses"> The gray crosses represent all of the San Francisco bicycle-injury crashes between 2000 and 2011. 
+		<br>The <span	id="circles">red circles</span> indicate the crashes that resulted in a fatality. </span></p> 
+	<img src="maps/Bicycle Fatalities Mapped copy.png" width="660" height="630" alt="Bicycle Fatalities Mapped Copy">
+</div>
 	
+		
 	
 </body>
 </html>

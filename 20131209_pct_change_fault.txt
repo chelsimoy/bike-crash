@@ -1,0 +1,2050 @@
+
+R version 3.0.1 (2013-05-16) -- "Good Sport"
+Copyright (C) 2013 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin10.8.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[R.app GUI 1.61 (6492) x86_64-apple-darwin10.8.0]
+
+[History restored from /Users/chelsimoy/.Rapp.history]
+
+> setwd('~/dataviz-fall-2013/bike-crash/')
+> data <- read.csv('bike_collision.csv')
+> head(data)
+  Accident.Number Document.Number collision.type Report.Number Primary.Road Secondary.Road Crossing.Number                  location intersection.number distance
+1    7.306062e+12              NA          Other            NA     Ellis St Leavenworth St               0 Ellis St & Leavenworth St                   0       2'
+2    7.306081e+12              NA          Other            NA     43rd Ave      Rivera St               0      43rd Ave & Rivera St                   0     225'
+3    7.306155e+12              NA          Other            NA  Ofarrell St      Larkin St               0   Ofarrell St & Larkin St                   0       5'
+4    7.306174e+12              NA          Other            NA   Mission St        24th St               0      Mission St & 24th St                   0     191'
+5    7.309086e+12              NA          Other            NA      14th St      Market St               0       14th St & Market St                   0      12'
+6    7.310131e+12              NA          Other            NA      Post St        Hyde St               0         Post St & Hyde St                   0     265'
+  direction   date       time   primary.collision.factor vc.violation hit.and.run involved.with highest.degree.of.injury collision.day.of.week party.at.fault
+1      West 1/2/00 6:20:00 AM   Other Hazardous Movement   VC 21657.0          No       Bicycle        Complaint of Pain                Sunday              1
+2     South 1/2/00 8:10:00 AM           Improper Turning   VC 22107.0          No       Bicycle     Other Visible Injury                Sunday              1
+3      East 1/2/00 3:50:00 PM  Traffic Signals and Signs   VC 21453.A          No       Bicycle        Complaint of Pain                Sunday              1
+4     South 1/2/00 5:42:00 PM Unsafe Starting or Backing   VC 22106.0          No       Bicycle     Other Visible Injury                Sunday              1
+5     South 1/5/00 8:55:00 AM           Improper Turning   VC 22100.B          No       Bicycle     Other Visible Injury             Wednesday              1
+6      East 1/6/00 1:05:00 PM   Other Hazardous Movement   VC 21657.0          No       Bicycle     Other Visible Injury              Thursday              1
+  number.of.parties number.injured number.killed weather       road.condition road.surface.condition             lighting right.of.way.controls
+1                 2              1             0   Clear No Unusual Condition                    Dry Dark - Street Lights           Functioning
+2                 2              1             0   Clear No Unusual Condition                    Dry             Daylight                  None
+3                 3              1             0   Clear No Unusual Condition                    Dry             Daylight           Functioning
+4                 2              1             0   Clear No Unusual Condition                    Dry Dark - Street Lights                  None
+5                 2              1             0   Clear No Unusual Condition                    Dry             Daylight           Functioning
+6                 2              1             0   Clear No Unusual Condition                    Dry             Daylight                  None
+  Direction.of.Travel.1 Direction.of.Travel.2 Direction.of.Travel.1.2 Direction.of.Travel.2.2 Movement.Preceding.Collision.1 Movement.Preceding.Collision.2
+1                  West                  East                      NA                      NA               Making Left Turn            Traveling Wrong Way
+2                  East                 North                      NA                      NA                  Making U Turn            Proceeding Straight
+3                 North                  East                      NA                      NA               Entering Traffic            Proceeding Straight
+4                 North                 South                      NA                      NA                        Backing            Proceeding Straight
+5                 South                 South                      NA                      NA               Making Left Turn            Proceeding Straight
+6                  West                  West                      NA                      NA            Proceeding Straight           Not Applicable - Ped
+  Party.Type.1 Party.Sex.1 Party.Age.1 party.sobriety.1 Party.Type.2 Party.Sex.2 Party.Age.2 party.sobriety.2 Party.Number Party.Type Party.Sex Party.Age
+1       Driver        Male          NA             HNBD    Bicyclist        Male          NA             HNBD           NA         NA        NA        NA
+2       Driver        Male          70             HNBD    Bicyclist        Male          63             HNBD           NA         NA        NA        NA
+3    Bicyclist        Male          47             HNBD       Driver        Male          46             HNBD           NA         NA        NA        NA
+4       Driver        Male          32             HNBD    Bicyclist        Male          41             HNBD           NA         NA        NA        NA
+5    Bicyclist        Male          30             HNBD       Driver      Female          44             HNBD           NA         NA        NA        NA
+6    Bicyclist        Male          24             HNBD   Pedestrian      Female          45             HNBD           NA         NA        NA        NA
+  Number.of.Victims.This.Party Number.Injured.This.Party Number.Killed.This.Party Extent.of.Injury Direction.of.Travel Movement.Preceding.Collision Party.Sobriety
+1                           NA                        NA                       NA               NA                  NA                           NA             NA
+2                           NA                        NA                       NA               NA                  NA                           NA             NA
+3                           NA                        NA                       NA               NA                  NA                           NA             NA
+4                           NA                        NA                       NA               NA                  NA                           NA             NA
+5                           NA                        NA                       NA               NA                  NA                           NA             NA
+6                           NA                        NA                       NA               NA                  NA                           NA             NA
+  Drugs Party.Violation.Category Associated.Cause.1 Associated.Cause.2 Associated.Cause.3 Vehicle.Year Vehicle.Make Vehicle.Type city.name First.Name Last.Name
+1    NA                       NA      None Apparent      None Apparent                 NA           NA           NA           NA        NA         NA        NA
+2    NA                       NA        None Stated        None Stated                 NA           NA           NA           NA        NA         NA        NA
+3    NA                       NA        None Stated      None Apparent                 NA           NA           NA           NA        NA         NA        NA
+4    NA                       NA      None Apparent      None Apparent                 NA           NA           NA           NA        NA         NA        NA
+5    NA                       NA        None Stated        None Stated                 NA           NA           NA           NA        NA         NA        NA
+6    NA                       NA        None Stated          Violation                 NA           NA           NA           NA        NA         NA        NA
+       pedestrian.action Vehicle.Type.1 Vehicle.Type.2 Property.Damage.Owner distance.value Utility.Field Custom.Text poi.1 poi.2 Officer.ID Record.Verified
+1 No Pedestrian Involved          Truck        Bicycle                    NA              0            NA          NA    NA    NA      00022              NA
+2 No Pedestrian Involved  Passenger Car        Bicycle                    NA              0            NA          NA    NA    NA      00866              NA
+3 No Pedestrian Involved        Bicycle   Pickup Truck                    NA              0            NA          NA    NA    NA      02232              NA
+4 No Pedestrian Involved  Passenger Car        Bicycle                    NA              0            NA          NA    NA    NA      01528              NA
+5 No Pedestrian Involved        Bicycle  Passenger Car                    NA              0            NA          NA    NA    NA      00125              NA
+6                In Road        Bicycle     Pedestrian                    NA              0            NA          NA    NA    NA      00380              NA
+        x       y YesNo      Node.Number Path                     Segment.Number
+1 6008464 2113832 FALSE 6008466, 2113832   NA 6008466, 2113832, 6007990, 2113766
+2 5982965 2099932 FALSE 5982957, 2100157   NA 5982981, 2099479, 5982957, 2100157
+3 6007472 2114039 FALSE 6007467, 2114038   NA 6007943, 2114104, 6007467, 2114038
+4 6007075 2101863 FALSE 6007064, 2102054   NA 6007097, 2101471, 6007064, 2102054
+5 6004240 2107757 FALSE 6004228, 2107756   NA 6004458, 2107772, 6004228, 2107756
+6 6008109 2114823 FALSE 6007847, 2114787   NA 6008323, 2114853, 6007847, 2114787
+> data <- read.csv('bike_collision.csv', stringsAsFactors=F)
+> date$year <- format(as.Date(data$newDate, format="%m/%d/%y"), "%Y")
+Error in as.Date.default(data$newDate, format = "%m/%d/%y") : 
+  do not know how to convert 'data$newDate' to class “Date”
+> 
+> date$year <- as.Date(data$newDate, format="%m/%d/%y")
+Error in as.Date.default(data$newDate, format = "%m/%d/%y") : 
+  do not know how to convert 'data$newDate' to class “Date”
+> data$newDate <- data$DATE
+> date$year <- format(as.Date(data$newDate, format="%m/%d/%y"), "%Y")
+Error in as.Date.default(data$newDate, format = "%m/%d/%y") : 
+  do not know how to convert 'data$newDate' to class “Date”
+> head(newDate)
+Error in head(newDate) : object 'newDate' not found
+> data$newDate <- data$date
+> head(newDate)
+Error in head(newDate) : object 'newDate' not found
+> names(date)
+NULL
+> names(data)
+ [1] "Accident.Number"                "Document.Number"               
+ [3] "collision.type"                 "Report.Number"                 
+ [5] "Primary.Road"                   "Secondary.Road"                
+ [7] "Crossing.Number"                "location"                      
+ [9] "intersection.number"            "distance"                      
+[11] "direction"                      "date"                          
+[13] "time"                           "primary.collision.factor"      
+[15] "vc.violation"                   "hit.and.run"                   
+[17] "involved.with"                  "highest.degree.of.injury"      
+[19] "collision.day.of.week"          "party.at.fault"                
+[21] "number.of.parties"              "number.injured"                
+[23] "number.killed"                  "weather"                       
+[25] "road.condition"                 "road.surface.condition"        
+[27] "lighting"                       "right.of.way.controls"         
+[29] "Direction.of.Travel.1"          "Direction.of.Travel.2"         
+[31] "Direction.of.Travel.1.2"        "Direction.of.Travel.2.2"       
+[33] "Movement.Preceding.Collision.1" "Movement.Preceding.Collision.2"
+[35] "Party.Type.1"                   "Party.Sex.1"                   
+[37] "Party.Age.1"                    "party.sobriety.1"              
+[39] "Party.Type.2"                   "Party.Sex.2"                   
+[41] "Party.Age.2"                    "party.sobriety.2"              
+[43] "Party.Number"                   "Party.Type"                    
+[45] "Party.Sex"                      "Party.Age"                     
+[47] "Number.of.Victims.This.Party"   "Number.Injured.This.Party"     
+[49] "Number.Killed.This.Party"       "Extent.of.Injury"              
+[51] "Direction.of.Travel"            "Movement.Preceding.Collision"  
+[53] "Party.Sobriety"                 "Drugs"                         
+[55] "Party.Violation.Category"       "Associated.Cause.1"            
+[57] "Associated.Cause.2"             "Associated.Cause.3"            
+[59] "Vehicle.Year"                   "Vehicle.Make"                  
+[61] "Vehicle.Type"                   "city.name"                     
+[63] "First.Name"                     "Last.Name"                     
+[65] "pedestrian.action"              "Vehicle.Type.1"                
+[67] "Vehicle.Type.2"                 "Property.Damage.Owner"         
+[69] "distance.value"                 "Utility.Field"                 
+[71] "Custom.Text"                    "poi.1"                         
+[73] "poi.2"                          "Officer.ID"                    
+[75] "Record.Verified"                "x"                             
+[77] "y"                              "YesNo"                         
+[79] "Node.Number"                    "Path"                          
+[81] "Segment.Number"                 "newDate"                       
+> head(data$date)
+[1] "1/2/00" "1/2/00" "1/2/00" "1/2/00" "1/5/00" "1/6/00"
+> data$newDate <- data$date
+> head(data$newDate)
+[1] "1/2/00" "1/2/00" "1/2/00" "1/2/00" "1/5/00" "1/6/00"
+> date$year <- format(as.Date(data$newDate, format="%m/%d/%y"), "%Y")
+Error in date$year <- format(as.Date(data$newDate, format = "%m/%d/%y"),  : 
+  object of type 'closure' is not subsettable
+> class(data$newDate)
+[1] "character"
+> date$year <- as.Date(data$newDate, format="%m/%d/%y")
+Error in date$year <- as.Date(data$newDate, format = "%m/%d/%y") : 
+  object of type 'closure' is not subsettable
+> data$year <- format(as.Date(data$newDate, format="%m/%d/%y"), "%Y")
+> head(data$year)
+[1] "2000" "2000" "2000" "2000" "2000" "2000"
+> data$at.fault <- NA
+> party_at_fault_2_indexes <- which(data$party.at.fault == 2)
+> data$at.fault[party_at_fault_2_indexes] <- data$Party.Type.2[party_at_fault_2_indexes]
+> head(data$at.fault)
+[1] NA NA NA NA NA NA
+> party_at_fault_1_indexes <- which(data$party.at.fault == 1)
+> data$at.fault[party_at_fault_1_indexes] <- data$Party.Type.1[party_at_fault_1_indexes]
+> head(data$at.fault)
+[1] "Driver"    "Driver"    "Bicyclist" "Driver"    "Bicyclist" "Bicyclist"
+> aggregate(data$at.fault, list(data$year, data$at.fault), length)
+   Group.1        Group.2   x
+1     2000      Bicyclist 174
+2     2001      Bicyclist 171
+3     2002      Bicyclist 137
+4     2003      Bicyclist 166
+5     2004      Bicyclist 148
+6     2005      Bicyclist 171
+7     2006      Bicyclist 159
+8     2007      Bicyclist 202
+9     2008      Bicyclist 213
+10    2009      Bicyclist 235
+11    2010      Bicyclist 278
+12    2011      Bicyclist 276
+13    2000         Driver 171
+14    2001         Driver 171
+15    2002         Driver 134
+16    2003         Driver 108
+17    2004         Driver 127
+18    2005         Driver 132
+19    2006         Driver 135
+20    2007         Driver 191
+21    2008         Driver 194
+22    2009         Driver 218
+23    2010         Driver 267
+24    2011         Driver 225
+25    2002     Not Stated   2
+26    2003     Not Stated   2
+27    2006     Not Stated   1
+28    2007     Not Stated   1
+29    2008     Not Stated   1
+30    2002          Other   2
+31    2004          Other   2
+32    2005          Other   1
+33    2007          Other   1
+34    2008          Other   1
+35    2009          Other   2
+36    2010          Other   4
+37    2011          Other   4
+38    2000 Parked Vehicle   5
+39    2001 Parked Vehicle   7
+40    2002 Parked Vehicle  13
+41    2003 Parked Vehicle   9
+42    2004 Parked Vehicle  11
+43    2005 Parked Vehicle  13
+44    2006 Parked Vehicle   6
+45    2007 Parked Vehicle  13
+46    2008 Parked Vehicle  19
+47    2009 Parked Vehicle  12
+48    2010 Parked Vehicle  14
+49    2011 Parked Vehicle  18
+50    2000     Pedestrian   7
+51    2001     Pedestrian   6
+52    2002     Pedestrian   4
+53    2003     Pedestrian  10
+54    2004     Pedestrian   8
+55    2005     Pedestrian   7
+56    2006     Pedestrian   4
+57    2007     Pedestrian   8
+58    2008     Pedestrian   8
+59    2009     Pedestrian  14
+60    2010     Pedestrian   7
+61    2011     Pedestrian   8
+> at_fault_agg <- aggregate(data$at.fault, list(data$year, data$at.fault), length)
+> names(at_fault_agg) <- c("year", "group", "fault")
+> year_totals <- aggregate(data$at.fault, list(data$year), length)
+> names(year_totals) <- c("year", "crashes")
+> at_fault_pct <- merge(at_fault_agg, year_totals, by="year")
+> 
+> at_fault_pct$pct <- at_fault_pct$fault/ at_fault_pct$total_crash
+Error in `$<-.data.frame`(`*tmp*`, "pct", value = numeric(0)) : 
+  replacement has 0 rows, data has 61
+> head(at_fault_pct)
+  year          group fault crashes
+1 2000      Bicyclist   174     370
+2 2000     Pedestrian     7     370
+3 2000 Parked Vehicle     5     370
+4 2000         Driver   171     370
+5 2001      Bicyclist   171     375
+6 2001         Driver   171     375
+> merge(at_fault_agg, year_totals, by="year")
+   year          group fault crashes
+1  2000      Bicyclist   174     370
+2  2000     Pedestrian     7     370
+3  2000 Parked Vehicle     5     370
+4  2000         Driver   171     370
+5  2001      Bicyclist   171     375
+6  2001         Driver   171     375
+7  2001     Pedestrian     6     375
+8  2001 Parked Vehicle     7     375
+9  2002      Bicyclist   137     314
+10 2002          Other     2     314
+11 2002         Driver   134     314
+12 2002     Not Stated     2     314
+13 2002 Parked Vehicle    13     314
+14 2002     Pedestrian     4     314
+15 2003         Driver   108     318
+16 2003      Bicyclist   166     318
+17 2003 Parked Vehicle     9     318
+18 2003     Pedestrian    10     318
+19 2003     Not Stated     2     318
+20 2004      Bicyclist   148     325
+21 2004          Other     2     325
+22 2004 Parked Vehicle    11     325
+23 2004         Driver   127     325
+24 2004     Pedestrian     8     325
+25 2005          Other     1     354
+26 2005      Bicyclist   171     354
+27 2005         Driver   132     354
+28 2005     Pedestrian     7     354
+29 2005 Parked Vehicle    13     354
+30 2006         Driver   135     354
+31 2006     Not Stated     1     354
+32 2006 Parked Vehicle     6     354
+33 2006      Bicyclist   159     354
+34 2006     Pedestrian     4     354
+35 2007          Other     1     465
+36 2007     Not Stated     1     465
+37 2007 Parked Vehicle    13     465
+38 2007      Bicyclist   202     465
+39 2007     Pedestrian     8     465
+40 2007         Driver   191     465
+41 2008          Other     1     495
+42 2008     Not Stated     1     495
+43 2008 Parked Vehicle    19     495
+44 2008      Bicyclist   213     495
+45 2008     Pedestrian     8     495
+46 2008         Driver   194     495
+47 2009          Other     2     553
+48 2009 Parked Vehicle    12     553
+49 2009      Bicyclist   235     553
+50 2009     Pedestrian    14     553
+51 2009         Driver   218     553
+52 2010      Bicyclist   278     629
+53 2010          Other     4     629
+54 2010         Driver   267     629
+55 2010 Parked Vehicle    14     629
+56 2010     Pedestrian     7     629
+57 2011         Driver   225     581
+58 2011 Parked Vehicle    18     581
+59 2011          Other     4     581
+60 2011      Bicyclist   276     581
+61 2011     Pedestrian     8     581
+> 
+> at_fault_pct <- merge(at_fault_agg, year_totals, by="year")
+> at_fault_pct$pct <- at_fault_pct$fault/ at_fault_pct$crashes
+> 
+> data$at.fault.clean[is.na(data$at.fault.clean)] <- "NA"
+Error in `$<-.data.frame`(`*tmp*`, "at.fault.clean", value = character(0)) : 
+  replacement has 0 rows, data has 5133
+In addition: Warning message:
+In is.na(data$at.fault.clean) :
+  is.na() applied to non-(list or vector) of type 'NULL'
+> data$at_fault_clean[is.na(data$at_fault_clean)] <- "NA"
+Error in `$<-.data.frame`(`*tmp*`, "at_fault_clean", value = character(0)) : 
+  replacement has 0 rows, data has 5133
+In addition: Warning message:
+In is.na(data$at_fault_clean) :
+  is.na() applied to non-(list or vector) of type 'NULL'
+> ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_brewer()
+Error: could not find function "ggplot"
+> 
+> library(ggplot)
+Error in library(ggplot) : there is no package called ‘ggplot’
+> library("RColorBrewer")
+> library("ggplot2")
+> ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_brewer()
+Mapping a variable to y and also using stat="bin".
+  With stat="bin", it will attempt to set the y value to the count of cases in each group.
+  This can result in unexpected behavior and will not be allowed in a future version of ggplot2.
+  If you want y to represent counts of cases, use stat="bin" and don't map a variable to y.
+  If you want y to represent values in the data, use stat="identity".
+  See ?geom_bar for examples. (Deprecated; last used in version 0.9.2)
+> ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_manual(values=c("#AB2B52", "#894873", "#6c628f", "#5674a4"))
+Mapping a variable to y and also using stat="bin".
+  With stat="bin", it will attempt to set the y value to the count of cases in each group.
+  This can result in unexpected behavior and will not be allowed in a future version of ggplot2.
+  If you want y to represent counts of cases, use stat="bin" and don't map a variable to y.
+  If you want y to represent values in the data, use stat="identity".
+  See ?geom_bar for examples. (Deprecated; last used in version 0.9.2)
+Error: Insufficient values in manual scale. 6 needed but only 4 provided.
+> ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_manual(values=c("PuRd"))
+Mapping a variable to y and also using stat="bin".
+  With stat="bin", it will attempt to set the y value to the count of cases in each group.
+  This can result in unexpected behavior and will not be allowed in a future version of ggplot2.
+  If you want y to represent counts of cases, use stat="bin" and don't map a variable to y.
+  If you want y to represent values in the data, use stat="identity".
+  See ?geom_bar for examples. (Deprecated; last used in version 0.9.2)
+Error: Insufficient values in manual scale. 6 needed but only 1 provided.
+> ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_brewer(palette="RdPu"))
+Error: unexpected ')' in "ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_brewer(palette="R"
+> ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_brewer(palette="RdPu")
+Mapping a variable to y and also using stat="bin".
+  With stat="bin", it will attempt to set the y value to the count of cases in each group.
+  This can result in unexpected behavior and will not be allowed in a future version of ggplot2.
+  If you want y to represent counts of cases, use stat="bin" and don't map a variable to y.
+  If you want y to represent values in the data, use stat="identity".
+  See ?geom_bar for examples. (Deprecated; last used in version 0.9.2)
+> ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_brewer(palette="PRGn")
+Mapping a variable to y and also using stat="bin".
+  With stat="bin", it will attempt to set the y value to the count of cases in each group.
+  This can result in unexpected behavior and will not be allowed in a future version of ggplot2.
+  If you want y to represent counts of cases, use stat="bin" and don't map a variable to y.
+  If you want y to represent values in the data, use stat="identity".
+  See ?geom_bar for examples. (Deprecated; last used in version 0.9.2)
+> ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_brewer(palette="BuPu")
+Mapping a variable to y and also using stat="bin".
+  With stat="bin", it will attempt to set the y value to the count of cases in each group.
+  This can result in unexpected behavior and will not be allowed in a future version of ggplot2.
+  If you want y to represent counts of cases, use stat="bin" and don't map a variable to y.
+  If you want y to represent values in the data, use stat="identity".
+  See ?geom_bar for examples. (Deprecated; last used in version 0.9.2)
+>  data$at.fault.clean[is.na(data$at.fault.clean)] <- "NA"
+Error in `$<-.data.frame`(`*tmp*`, "at.fault.clean", value = character(0)) : 
+  replacement has 0 rows, data has 5133
+In addition: Warning message:
+In is.na(data$at.fault.clean) :
+  is.na() applied to non-(list or vector) of type 'NULL'
+> 
+> class(data$year)
+[1] "character"
+> data$year <- format(as.Date(data$newDate, format="%m/%d/%y"), "%Y")
+> class(data$year)
+[1] "character"
+> data$newDate <- data$date
+> 
+> head(data$date)
+[1] "1/2/00" "1/2/00" "1/2/00" "1/2/00" "1/5/00" "1/6/00"
+> data$year <- format(as.Date(data$newDate, format="%m/%d/%y"), "%Y")
+> 
+> head(data$year)
+[1] "2000" "2000" "2000" "2000" "2000" "2000"
+> data$at.fault.clean[is.na(data$at.fault.clean)] <- "NA"
+Error in `$<-.data.frame`(`*tmp*`, "at.fault.clean", value = character(0)) : 
+  replacement has 0 rows, data has 5133
+In addition: Warning message:
+In is.na(data$at.fault.clean) :
+  is.na() applied to non-(list or vector) of type 'NULL'
+> data$at.fault <- NA
+> party_at_fault_2_indexes <- which(data$party.at.fault == 2)
+> data$at.fault[party_at_fault_2_indexes] <- data$Party.Type.2[party_at_fault_2_indexes]
+> 
+> 
+> party_at_fault_1_indexes <- which(data$party.at.fault == 1)
+> data$at.fault[party_at_fault_1_indexes] <- data$Party.Type.1[party_at_fault_1_indexes]
+> data$at.fault.clean[is.na(data$at.fault.clean)] <- "NA"
+Error in `$<-.data.frame`(`*tmp*`, "at.fault.clean", value = character(0)) : 
+  replacement has 0 rows, data has 5133
+In addition: Warning message:
+In is.na(data$at.fault.clean) :
+  is.na() applied to non-(list or vector) of type 'NULL'
+> party_at_fault_2_indexes <- which(data$party.at.fault == 2)
+> data$at.fault[party_at_fault_2_indexes] <- data$Party.Type.2[party_at_fault_2_indexes]
+> party_at_fault_1_indexes <- which(data$party.at.fault == 1)
+> data$at.fault[party_at_fault_1_indexes] <- data$Party.Type.1[party_at_fault_1_indexes]
+> head(data$at.fault.clean)
+NULL
+> head(data$at.fault)
+[1] "Driver"    "Driver"    "Bicyclist" "Driver"    "Bicyclist" "Bicyclist"
+> is.na(data$at.fault)
+   [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+  [15] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+  [29] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+  [43] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+  [57] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+  [71] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+  [85] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+  [99] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+ [113] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [127] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [141] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+ [155] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [169] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [183] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+ [197] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [211] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+ [225] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [239] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [267] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [281] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+ [295] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [309] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+ [323] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+ [337] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [351] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [365] FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+ [379]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [393] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [407] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+ [421] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+ [435] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [449] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [463] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+ [477] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [491] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [505] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [519] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [533] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+ [547] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [561] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+ [575] FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [589]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [603] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [617] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [631] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [645] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+ [659] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [673] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [687] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [701] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [715]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+ [729] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+ [743] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+ [757]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [771] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [785] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [799] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [813]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+ [827]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+ [841]  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+ [855] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [869] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+ [883] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+ [897] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+ [911] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+ [925] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [939] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [953] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [967] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [981] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [995] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1009] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1023] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1037] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1051] FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1065] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+[1079] FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+[1093] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1107] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+[1121] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1135] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1149] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[1163] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+[1177] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+[1191] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1205] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1219] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1233] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1247] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1261] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+[1275] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1289] FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+[1303] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1317] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1331] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[1345] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1359] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[1373] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE
+[1387] FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+[1401]  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1415] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[1429] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+[1443] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE
+[1457] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1471] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1485] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1499] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+[1513] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1527] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1541] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+[1555] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1569] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[1583] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+[1597] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[1611] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1625] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE
+[1639] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1653] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+[1667] FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[1681] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1695] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE
+[1709] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1723] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1737] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE
+[1751] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[1765] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+[1779] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1793] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1807] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1821] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1835] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1849]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+[1863] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE
+[1877] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1891] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1905] FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1919] FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1933] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE
+[1947] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1961] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+[1975] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1989] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2003] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[2017] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2031] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE
+[2045] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2059] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[2073] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2087] FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+[2101] FALSE  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+[2115] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE
+[2129] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE
+[2143] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+[2157] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+[2171] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+[2185] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2199] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[2213] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[2227] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+[2241] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2255] FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2269]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2283]  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+[2297]  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2311]  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE
+[2325] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2339] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2353] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+[2367] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+[2381]  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2395] FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+[2409] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[2423] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+[2437] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE FALSE
+[2451] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[2465] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2479] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2493] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2507] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[2521] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE
+[2535] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE
+[2549] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2563] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+[2577] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2591] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE FALSE
+[2605] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE
+[2619] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2633] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2647] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2661] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+[2675] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+[2689] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2703] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2717] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE
+[2731] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+[2745] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+[2759] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+[2773] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2787] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+[2801] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2815] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+[2829] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2843] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+[2857] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2871] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2885] FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+[2899] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2913] FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[2927] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2941] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[2955] FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2969] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+[2983] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[2997] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE
+[3011] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE
+[3025] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[3039]  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3053] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE
+[3067] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[3081] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+[3095] FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
+[3109] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE
+[3123] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[3137]  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3151] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3165] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3179] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3193] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3207] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[3221] FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3235] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3249] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[3263] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+[3277]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3291] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[3305] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[3319] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+[3333] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+[3347] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+[3361] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[3375]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+[3389]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3403] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE
+[3417] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+[3431]  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+[3445] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3459] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3473] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE
+[3487]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3501] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+[3515] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[3529] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3543]  TRUE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+[3557] FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3571] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+[3585]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3599] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+[3613]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE
+[3627] FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+[3641] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3655] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE
+[3669] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3683] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3697] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+[3711]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE
+[3725] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3739] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE
+[3753] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3767] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+[3781] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3795] FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3809]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE
+[3823] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE
+[3837] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE
+[3851] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3865] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[3879] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE
+[3893] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3907] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+[3921] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3935] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3949] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[3963] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3977] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[3991] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4005] FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+[4019] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+[4033] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+[4047] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE
+[4061]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE
+[4075] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE
+[4089] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4103] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4117] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
+[4131] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4145] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[4159] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[4173] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4187] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4201] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[4215] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4229] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4243] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4257]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4271] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4285] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE
+[4299] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[4313] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[4327] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4341] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[4355] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[4369] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4383] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4397] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4411] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE
+[4425]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE
+[4439] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+[4453] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+[4467] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4481] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4495] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4509] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE
+[4523] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4537] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4551] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4565] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+[4579] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+[4593] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+[4607] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[4621] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[4635] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[4649]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4663] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4677] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4691] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[4705] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+[4719] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+[4733] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4747] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE
+[4761] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[4775] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+[4789] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[4803] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+[4817] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+[4831] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4845] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4859] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE
+[4873] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4887] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE
+[4901] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4915] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4929] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4943]  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4957] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE
+[4971] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4985] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[4999] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[5013] FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[5027] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[5041] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE
+[5055] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[5069]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[5083] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+[5097] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+[5111]  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[5125] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+> data$at.fault.clean[is.na(data$at.fault.clean)] <- "NA"
+Error in `$<-.data.frame`(`*tmp*`, "at.fault.clean", value = character(0)) : 
+  replacement has 0 rows, data has 5133
+In addition: Warning message:
+In is.na(data$at.fault.clean) :
+  is.na() applied to non-(list or vector) of type 'NULL'
+> head(data$at.fault)
+[1] "Driver"    "Driver"    "Bicyclist" "Driver"    "Bicyclist" "Bicyclist"
+> data$at.fault.clean[is.na(data$at.fault.clean)] <- "NA"
+Error in `$<-.data.frame`(`*tmp*`, "at.fault.clean", value = character(0)) : 
+  replacement has 0 rows, data has 5133
+In addition: Warning message:
+In is.na(data$at.fault.clean) :
+  is.na() applied to non-(list or vector) of type 'NULL'
+> data$at.fault[is.na(data$at.fault)] <- "NA"
+> data$at.fault
+   [1] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+   [6] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+  [11] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+  [16] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+  [21] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+  [26] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+  [31] "Bicyclist"      "NA"             "Pedestrian"     "Driver"         "Driver"        
+  [36] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+  [41] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+  [46] "Driver"         "Bicyclist"      "NA"             "Driver"         "Driver"        
+  [51] "NA"             "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+  [56] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+  [61] "Bicyclist"      "Bicyclist"      "Parked Vehicle" "Driver"         "Driver"        
+  [66] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+  [71] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Bicyclist"     
+  [76] "Driver"         "Driver"         "Bicyclist"      "NA"             "Bicyclist"     
+  [81] "Driver"         "Driver"         "Driver"         "Driver"         "Bicyclist"     
+  [86] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+  [91] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+  [96] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+ [101] "Driver"         "Driver"         "Driver"         "Driver"         "Driver"        
+ [106] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Bicyclist"     
+ [111] "NA"             "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+ [116] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+ [121] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+ [126] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+ [131] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Driver"        
+ [136] "Driver"         "Bicyclist"      "Pedestrian"     "Bicyclist"      "Bicyclist"     
+ [141] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+ [146] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+ [151] "Driver"         "NA"             "Bicyclist"      "Bicyclist"      "Driver"        
+ [156] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+ [161] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+ [166] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Parked Vehicle"
+ [171] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Pedestrian"    
+ [176] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Driver"        
+ [181] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+ [186] "Pedestrian"     "Bicyclist"      "Bicyclist"      "Pedestrian"     "NA"            
+ [191] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+ [196] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+ [201] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+ [206] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+ [211] "Pedestrian"     "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+ [216] "Bicyclist"      "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"     
+ [221] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+ [226] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+ [231] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+ [236] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Driver"        
+ [241] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Parked Vehicle"
+ [246] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+ [251] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+ [256] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Driver"        
+ [261] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+ [266] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Pedestrian"    
+ [271] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+ [276] "Driver"         "Driver"         "Bicyclist"      "Parked Vehicle" "Driver"        
+ [281] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+ [286] "Bicyclist"      "Driver"         "Driver"         "NA"             "Driver"        
+ [291] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+ [296] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+ [301] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+ [306] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+ [311] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+ [316] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+ [321] "NA"             "Driver"         "Driver"         "Driver"         "Bicyclist"     
+ [326] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Driver"        
+ [331] "Driver"         "Driver"         "NA"             "Bicyclist"      "Driver"        
+ [336] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+ [341] "Bicyclist"      "Bicyclist"      "Parked Vehicle" "Driver"         "Bicyclist"     
+ [346] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+ [351] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+ [356] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+ [361] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+ [366] "Driver"         "NA"             "NA"             "Bicyclist"      "Bicyclist"     
+ [371] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+ [376] "Bicyclist"      "Driver"         "NA"             "NA"             "Pedestrian"    
+ [381] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+ [386] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+ [391] "Pedestrian"     "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+ [396] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+ [401] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+ [406] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Driver"        
+ [411] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+ [416] "NA"             "Driver"         "Parked Vehicle" "Driver"         "Bicyclist"     
+ [421] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+ [426] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+ [431] "Driver"         "Driver"         "Bicyclist"      "NA"             "Bicyclist"     
+ [436] "Driver"         "Bicyclist"      "Driver"         "NA"             "Driver"        
+ [441] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+ [446] "Driver"         "Driver"         "Parked Vehicle" "Driver"         "Pedestrian"    
+ [451] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+ [456] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+ [461] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+ [466] "Driver"         "Driver"         "Driver"         "Bicyclist"      "NA"            
+ [471] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Driver"        
+ [476] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Bicyclist"     
+ [481] "Bicyclist"      "Driver"         "Parked Vehicle" "Bicyclist"      "Driver"        
+ [486] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+ [491] "Bicyclist"      "Driver"         "Bicyclist"      "NA"             "Driver"        
+ [496] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+ [501] "Driver"         "Driver"         "Driver"         "Driver"         "Driver"        
+ [506] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Driver"        
+ [511] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+ [516] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+ [521] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Driver"        
+ [526] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+ [531] "Driver"         "Driver"         "Driver"         "Parked Vehicle" "Bicyclist"     
+ [536] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Driver"        
+ [541] "Bicyclist"      "NA"             "Bicyclist"      "Driver"         "Driver"        
+ [546] "Bicyclist"      "Driver"         "NA"             "Bicyclist"      "Bicyclist"     
+ [551] "Bicyclist"      "Bicyclist"      "Parked Vehicle" "Bicyclist"      "Driver"        
+ [556] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+ [561] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+ [566] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+ [571] "Driver"         "NA"             "Bicyclist"      "Bicyclist"      "Bicyclist"     
+ [576] "Driver"         "NA"             "NA"             "Bicyclist"      "Bicyclist"     
+ [581] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Parked Vehicle"
+ [586] "Bicyclist"      "Bicyclist"      "Driver"         "NA"             "Driver"        
+ [591] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+ [596] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+ [601] "Bicyclist"      "Parked Vehicle" "Bicyclist"      "Driver"         "NA"            
+ [606] "Driver"         "Pedestrian"     "Bicyclist"      "Driver"         "Driver"        
+ [611] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Driver"        
+ [616] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+ [621] "Driver"         "Driver"         "Pedestrian"     "Bicyclist"      "Bicyclist"     
+ [626] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+ [631] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Bicyclist"     
+ [636] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+ [641] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+ [646] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+ [651] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+ [656] "Bicyclist"      "Driver"         "NA"             "Bicyclist"      "Bicyclist"     
+ [661] "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"      "Bicyclist"     
+ [666] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Driver"        
+ [671] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+ [676] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+ [681] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+ [686] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+ [691] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+ [696] "Bicyclist"      "Bicyclist"      "Pedestrian"     "Bicyclist"      "Driver"        
+ [701] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+ [706] "NA"             "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+ [711] "Driver"         "Driver"         "Bicyclist"      "Driver"         "NA"            
+ [716] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+ [721] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+ [726] "Driver"         "Driver"         "NA"             "Bicyclist"      "Driver"        
+ [731] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+ [736] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+ [741] "Bicyclist"      "NA"             "Bicyclist"      "Bicyclist"      "Driver"        
+ [746] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+ [751] "Driver"         "NA"             "Driver"         "Bicyclist"      "Bicyclist"     
+ [756] "Bicyclist"      "NA"             "NA"             "Driver"         "Driver"        
+ [761] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+ [766] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+ [771] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+ [776] "Driver"         "Parked Vehicle" "Driver"         "Driver"         "Bicyclist"     
+ [781] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+ [786] "Driver"         "Driver"         "Parked Vehicle" "Driver"         "Bicyclist"     
+ [791] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+ [796] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+ [801] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "NA"            
+ [806] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+ [811] "Driver"         "Driver"         "NA"             "Driver"         "Driver"        
+ [816] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Driver"        
+ [821] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+ [826] "NA"             "NA"             "Bicyclist"      "Driver"         "Driver"        
+ [831] "Bicyclist"      "Bicyclist"      "Driver"         "Parked Vehicle" "Bicyclist"     
+ [836] "NA"             "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+ [841] "NA"             "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+ [846] "NA"             "Driver"         "Driver"         "NA"             "Bicyclist"     
+ [851] "Driver"         "Parked Vehicle" "Bicyclist"      "Bicyclist"      "Driver"        
+ [856] "NA"             "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+ [861] "Driver"         "Driver"         "Driver"         "Parked Vehicle" "Bicyclist"     
+ [866] "Parked Vehicle" "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+ [871] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+ [876] "Bicyclist"      "Driver"         "Driver"         "NA"             "Driver"        
+ [881] "Parked Vehicle" "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+ [886] "Driver"         "Bicyclist"      "Driver"         "Driver"         "NA"            
+ [891] "Driver"         "Driver"         "Driver"         "Driver"         "Driver"        
+ [896] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+ [901] "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"      "Bicyclist"     
+ [906] "Driver"         "Bicyclist"      "Driver"         "Driver"         "NA"            
+ [911] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+ [916] "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"      "Bicyclist"     
+ [921] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+ [926] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+ [931] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+ [936] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Parked Vehicle"
+ [941] "Driver"         "Bicyclist"      "Bicyclist"      "Pedestrian"     "Driver"        
+ [946] "Driver"         "Driver"         "Driver"         "Driver"         "Driver"        
+ [951] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+ [956] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+ [961] "Driver"         "Bicyclist"      "Driver"         "Pedestrian"     "Driver"        
+ [966] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Parked Vehicle"
+ [971] "Bicyclist"      "Driver"         "Parked Vehicle" "Driver"         "Driver"        
+ [976] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+ [981] "Parked Vehicle" "Bicyclist"      "Driver"         "Bicyclist"      "NA"            
+ [986] "Bicyclist"      "Bicyclist"      "Pedestrian"     "Other"          "Bicyclist"     
+ [991] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+ [996] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[1001] "Driver"         "Bicyclist"      "Driver"         "Not Stated"     "Bicyclist"     
+[1006] "Driver"         "Not Stated"     "Bicyclist"      "Bicyclist"      "Driver"        
+[1011] "Bicyclist"      "Driver"         "Bicyclist"      "Other"          "Driver"        
+[1016] "Driver"         "Pedestrian"     "Driver"         "Driver"         "Bicyclist"     
+[1021] "Driver"         "Driver"         "Driver"         "Driver"         "NA"            
+[1026] "Bicyclist"      "Driver"         "Bicyclist"      "Parked Vehicle" "Driver"        
+[1031] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[1036] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[1041] "Driver"         "Bicyclist"      "NA"             "Driver"         "Bicyclist"     
+[1046] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1051] "Parked Vehicle" "Bicyclist"      "NA"             "NA"             "Driver"        
+[1056] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[1061] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[1066] "Bicyclist"      "Pedestrian"     "Driver"         "Bicyclist"      "Bicyclist"     
+[1071] "Bicyclist"      "Bicyclist"      "Not Stated"     "Driver"         "Driver"        
+[1076] "NA"             "Driver"         "Bicyclist"      "Driver"         "NA"            
+[1081] "Driver"         "Driver"         "Bicyclist"      "Driver"         "NA"            
+[1086] "Bicyclist"      "NA"             "Bicyclist"      "Driver"         "Parked Vehicle"
+[1091] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[1096] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1101] "Pedestrian"     "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[1106] "Bicyclist"      "Driver"         "Pedestrian"     "Pedestrian"     "Driver"        
+[1111] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "NA"            
+[1116] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[1121] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "NA"            
+[1126] "Pedestrian"     "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[1131] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[1136] "Bicyclist"      "Driver"         "Driver"         "NA"             "Bicyclist"     
+[1141] "Bicyclist"      "Pedestrian"     "Bicyclist"      "Driver"         "Driver"        
+[1146] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1151] "Bicyclist"      "Bicyclist"      "Parked Vehicle" "Bicyclist"      "Bicyclist"     
+[1156] "Driver"         "Parked Vehicle" "Bicyclist"      "Bicyclist"      "Driver"        
+[1161] "NA"             "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[1166] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "NA"            
+[1171] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1176] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1181] "Bicyclist"      "NA"             "Driver"         "Bicyclist"      "Bicyclist"     
+[1186] "Driver"         "Driver"         "Driver"         "Bicyclist"      "NA"            
+[1191] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[1196] "Parked Vehicle" "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[1201] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[1206] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Not Stated"    
+[1211] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[1216] "Driver"         "Driver"         "Driver"         "Bicyclist"      "NA"            
+[1221] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[1226] "Driver"         "Parked Vehicle" "Bicyclist"      "Driver"         "Driver"        
+[1231] "Bicyclist"      "Bicyclist"      "Driver"         "Parked Vehicle" "Bicyclist"     
+[1236] "Parked Vehicle" "Driver"         "Bicyclist"      "NA"             "Bicyclist"     
+[1241] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[1246] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[1251] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[1256] "Driver"         "Parked Vehicle" "Driver"         "Bicyclist"      "Bicyclist"     
+[1261] "Pedestrian"     "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"     
+[1266] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1271] "Bicyclist"      "Driver"         "Bicyclist"      "NA"             "Driver"        
+[1276] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[1281] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[1286] "Pedestrian"     "Driver"         "Pedestrian"     "Bicyclist"      "Bicyclist"     
+[1291] "NA"             "NA"             "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1296] "Bicyclist"      "NA"             "Driver"         "Bicyclist"      "Bicyclist"     
+[1301] "Driver"         "Bicyclist"      "Driver"         "NA"             "Driver"        
+[1306] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[1311] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Pedestrian"     "Driver"        
+[1316] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[1321] "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"      "Bicyclist"     
+[1326] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[1331] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1336] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1341] "Bicyclist"      "Driver"         "NA"             "Bicyclist"      "Driver"        
+[1346] "Driver"         "Driver"         "Bicyclist"      "Driver"         "NA"            
+[1351] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[1356] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[1361] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Parked Vehicle"
+[1366] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[1371] "NA"             "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[1376] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[1381] "NA"             "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[1386] "NA"             "Parked Vehicle" "Parked Vehicle" "Driver"         "NA"            
+[1391] "Parked Vehicle" "Parked Vehicle" "NA"             "Bicyclist"      "NA"            
+[1396] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[1401] "NA"             "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[1406] "Bicyclist"      "NA"             "Bicyclist"      "Driver"         "Driver"        
+[1411] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[1416] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Parked Vehicle"
+[1421] "Parked Vehicle" "Parked Vehicle" "Driver"         "NA"             "Bicyclist"     
+[1426] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1431] "Other"          "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[1436] "Pedestrian"     "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[1441] "Driver"         "NA"             "Driver"         "Driver"         "Bicyclist"     
+[1446] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "NA"            
+[1451] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "NA"            
+[1456] "Bicyclist"      "Driver"         "Bicyclist"      "NA"             "Bicyclist"     
+[1461] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[1466] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[1471] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1476] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[1481] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1486] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[1491] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[1496] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Driver"        
+[1501] "Driver"         "Bicyclist"      "Driver"         "NA"             "Pedestrian"    
+[1506] "Bicyclist"      "NA"             "Driver"         "Driver"         "Driver"        
+[1511] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[1516] "NA"             "Bicyclist"      "Driver"         "Pedestrian"     "Driver"        
+[1521] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[1526] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "NA"            
+[1531] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[1536] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[1541] "Bicyclist"      "Bicyclist"      "Pedestrian"     "Bicyclist"      "Driver"        
+[1546] "Bicyclist"      "Parked Vehicle" "Driver"         "NA"             "Bicyclist"     
+[1551] "Parked Vehicle" "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[1556] "NA"             "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[1561] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[1566] "Bicyclist"      "Driver"         "Parked Vehicle" "Bicyclist"      "Bicyclist"     
+[1571] "Bicyclist"      "Pedestrian"     "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1576] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1581] "NA"             "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[1586] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "NA"            
+[1591] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1596] "Driver"         "Bicyclist"      "NA"             "Driver"         "Driver"        
+[1601] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[1606] "Bicyclist"      "Driver"         "Driver"         "NA"             "Driver"        
+[1611] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1616] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1621] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[1626] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[1631] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[1636] "NA"             "NA"             "Bicyclist"      "Driver"         "Driver"        
+[1641] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Parked Vehicle"
+[1646] "Driver"         "Bicyclist"      "Pedestrian"     "Pedestrian"     "Driver"        
+[1651] "Driver"         "Driver"         "Driver"         "Driver"         "Driver"        
+[1656] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Pedestrian"    
+[1661] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[1666] "NA"             "Driver"         "Driver"         "Bicyclist"      "NA"            
+[1671] "Bicyclist"      "NA"             "Driver"         "Driver"         "Driver"        
+[1676] "Driver"         "Bicyclist"      "Driver"         "NA"             "Driver"        
+[1681] "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"      "Bicyclist"     
+[1686] "Driver"         "Other"          "Driver"         "Bicyclist"      "Bicyclist"     
+[1691] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1696] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[1701] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "NA"            
+[1706] "NA"             "Driver"         "Parked Vehicle" "Bicyclist"      "Bicyclist"     
+[1711] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1716] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[1721] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Parked Vehicle" "Driver"        
+[1726] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Parked Vehicle" "Parked Vehicle"
+[1731] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[1736] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[1741] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[1746] "NA"             "Bicyclist"      "Driver"         "Bicyclist"      "NA"            
+[1751] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[1756] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "NA"            
+[1761] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[1766] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[1771] "Bicyclist"      "Bicyclist"      "Driver"         "Parked Vehicle" "Driver"        
+[1776] "Driver"         "Bicyclist"      "NA"             "Driver"         "Pedestrian"    
+[1781] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Bicyclist"     
+[1786] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1791] "Other"          "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[1796] "Driver"         "Bicyclist"      "Bicyclist"      "NA"             "Driver"        
+[1801] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[1806] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[1811] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Parked Vehicle"
+[1816] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[1821] "Driver"         "Bicyclist"      "NA"             "Driver"         "Driver"        
+[1826] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[1831] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[1836] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[1841] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1846] "Driver"         "Bicyclist"      "Driver"         "NA"             "Driver"        
+[1851] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[1856] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[1861] "Driver"         "NA"             "Driver"         "Bicyclist"      "Bicyclist"     
+[1866] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1871] "Driver"         "Bicyclist"      "NA"             "NA"             "NA"            
+[1876] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "NA"            
+[1881] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[1886] "Driver"         "Driver"         "Driver"         "Driver"         "Bicyclist"     
+[1891] "Parked Vehicle" "Driver"         "Driver"         "Parked Vehicle" "Driver"        
+[1896] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1901] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Pedestrian"    
+[1906] "NA"             "Driver"         "Driver"         "Driver"         "NA"            
+[1911] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[1916] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[1921] "Driver"         "NA"             "NA"             "Bicyclist"      "Parked Vehicle"
+[1926] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1931] "Bicyclist"      "Parked Vehicle" "Driver"         "Pedestrian"     "Parked Vehicle"
+[1936] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "NA"            
+[1941] "Driver"         "NA"             "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[1946] "Bicyclist"      "Bicyclist"      "NA"             "Driver"         "Driver"        
+[1951] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[1956] "Bicyclist"      "Bicyclist"      "Pedestrian"     "Bicyclist"      "Driver"        
+[1961] "Driver"         "Driver"         "Bicyclist"      "Pedestrian"     "Bicyclist"     
+[1966] "NA"             "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[1971] "Driver"         "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"     
+[1976] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[1981] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[1986] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[1991] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[1996] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[2001] "Pedestrian"     "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[2006] "Bicyclist"      "NA"             "Bicyclist"      "Bicyclist"      "Pedestrian"    
+[2011] "Bicyclist"      "NA"             "Bicyclist"      "Parked Vehicle" "Bicyclist"     
+[2016] "Driver"         "Driver"         "NA"             "NA"             "Driver"        
+[2021] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[2026] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2031] "Driver"         "NA"             "Bicyclist"      "Bicyclist"      "Driver"        
+[2036] "Bicyclist"      "Driver"         "NA"             "Driver"         "Bicyclist"     
+[2041] "Bicyclist"      "Driver"         "NA"             "Driver"         "Bicyclist"     
+[2046] "Parked Vehicle" "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[2051] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[2056] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[2061] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[2066] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[2071] "NA"             "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[2076] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[2081] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2086] "Driver"         "Bicyclist"      "Driver"         "NA"             "Bicyclist"     
+[2091] "Driver"         "NA"             "Driver"         "Driver"         "Bicyclist"     
+[2096] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "NA"            
+[2101] "Driver"         "NA"             "NA"             "NA"             "Driver"        
+[2106] "Driver"         "NA"             "Bicyclist"      "NA"             "Bicyclist"     
+[2111] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[2116] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Driver"        
+[2121] "Parked Vehicle" "Driver"         "Bicyclist"      "Driver"         "NA"            
+[2126] "NA"             "Bicyclist"      "Driver"         "Parked Vehicle" "Bicyclist"     
+[2131] "Driver"         "Driver"         "Not Stated"     "Bicyclist"      "Driver"        
+[2136] "Driver"         "Driver"         "Bicyclist"      "Driver"         "NA"            
+[2141] "Bicyclist"      "NA"             "Driver"         "Bicyclist"      "Bicyclist"     
+[2146] "Driver"         "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"     
+[2151] "Driver"         "Bicyclist"      "NA"             "Bicyclist"      "Driver"        
+[2156] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[2161] "Bicyclist"      "Bicyclist"      "Driver"         "NA"             "Driver"        
+[2166] "Pedestrian"     "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2171] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Pedestrian"    
+[2176] "Driver"         "Driver"         "Parked Vehicle" "Driver"         "Bicyclist"     
+[2181] "Driver"         "NA"             "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2186] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[2191] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[2196] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[2201] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[2206] "Bicyclist"      "Driver"         "NA"             "Bicyclist"      "Driver"        
+[2211] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2216] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[2221] "Bicyclist"      "NA"             "Driver"         "Bicyclist"      "Bicyclist"     
+[2226] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[2231] "Driver"         "Driver"         "Driver"         "NA"             "Driver"        
+[2236] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Parked Vehicle"
+[2241] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[2246] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2251] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[2256] "NA"             "Bicyclist"      "Bicyclist"      "Driver"         "NA"            
+[2261] "NA"             "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[2266] "Bicyclist"      "Bicyclist"      "Driver"         "NA"             "NA"            
+[2271] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[2276] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[2281] "Bicyclist"      "Driver"         "NA"             "Driver"         "Bicyclist"     
+[2286] "Driver"         "Driver"         "NA"             "NA"             "Bicyclist"     
+[2291] "NA"             "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2296] "Bicyclist"      "NA"             "Bicyclist"      "NA"             "Bicyclist"     
+[2301] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[2306] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[2311] "NA"             "Bicyclist"      "Bicyclist"      "Bicyclist"      "NA"            
+[2316] "NA"             "Bicyclist"      "Driver"         "Driver"         "NA"            
+[2321] "NA"             "Parked Vehicle" "Bicyclist"      "NA"             "Driver"        
+[2326] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[2331] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[2336] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Bicyclist"     
+[2341] "Bicyclist"      "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"     
+[2346] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[2351] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "NA"            
+[2356] "Driver"         "NA"             "Driver"         "Bicyclist"      "NA"            
+[2361] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[2366] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[2371] "Driver"         "NA"             "Bicyclist"      "NA"             "Bicyclist"     
+[2376] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[2381] "NA"             "Driver"         "NA"             "Driver"         "Driver"        
+[2386] "Driver"         "NA"             "Driver"         "Driver"         "Driver"        
+[2391] "Pedestrian"     "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2396] "NA"             "Driver"         "Bicyclist"      "Driver"         "NA"            
+[2401] "Driver"         "NA"             "Driver"         "Driver"         "Driver"        
+[2406] "Driver"         "Bicyclist"      "Pedestrian"     "Bicyclist"      "Parked Vehicle"
+[2411] "Driver"         "Driver"         "Driver"         "Not Stated"     "Driver"        
+[2416] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[2421] "NA"             "Driver"         "Driver"         "Driver"         "Bicyclist"     
+[2426] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[2431] "NA"             "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[2436] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Driver"        
+[2441] "Driver"         "Bicyclist"      "NA"             "NA"             "NA"            
+[2446] "Driver"         "Driver"         "Bicyclist"      "NA"             "Bicyclist"     
+[2451] "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"      "Bicyclist"     
+[2456] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[2461] "Driver"         "Bicyclist"      "NA"             "Bicyclist"      "Bicyclist"     
+[2466] "Bicyclist"      "NA"             "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2471] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2476] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[2481] "Driver"         "Bicyclist"      "NA"             "Driver"         "Driver"        
+[2486] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[2491] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[2496] "NA"             "Driver"         "Driver"         "Driver"         "Bicyclist"     
+[2501] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[2506] "Bicyclist"      "Bicyclist"      "Parked Vehicle" "NA"             "Driver"        
+[2511] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2516] "NA"             "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[2521] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2526] "Driver"         "Bicyclist"      "Driver"         "NA"             "Driver"        
+[2531] "Driver"         "NA"             "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2536] "Driver"         "Driver"         "Driver"         "Driver"         "Pedestrian"    
+[2541] "Driver"         "Parked Vehicle" "Bicyclist"      "NA"             "NA"            
+[2546] "NA"             "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[2551] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2556] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[2561] "Driver"         "Driver"         "Driver"         "Driver"         "Bicyclist"     
+[2566] "Bicyclist"      "Parked Vehicle" "Bicyclist"      "Driver"         "NA"            
+[2571] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[2576] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2581] "Driver"         "Bicyclist"      "Bicyclist"      "Pedestrian"     "Bicyclist"     
+[2586] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[2591] "Parked Vehicle" "Bicyclist"      "Parked Vehicle" "Driver"         "Bicyclist"     
+[2596] "Bicyclist"      "NA"             "NA"             "Driver"         "Driver"        
+[2601] "NA"             "NA"             "NA"             "Bicyclist"      "Driver"        
+[2606] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[2611] "Driver"         "Driver"         "NA"             "Driver"         "NA"            
+[2616] "NA"             "NA"             "Pedestrian"     "Bicyclist"      "Driver"        
+[2621] "NA"             "Parked Vehicle" "Driver"         "Driver"         "Bicyclist"     
+[2626] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[2631] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[2636] "Parked Vehicle" "NA"             "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2641] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[2646] "Driver"         "Parked Vehicle" "Driver"         "Bicyclist"      "NA"            
+[2651] "Driver"         "Driver"         "Driver"         "Driver"         "Driver"        
+[2656] "Driver"         "Driver"         "Bicyclist"      "Parked Vehicle" "Driver"        
+[2661] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[2666] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[2671] "NA"             "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[2676] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2681] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2686] "NA"             "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[2691] "Bicyclist"      "Driver"         "NA"             "Driver"         "Driver"        
+[2696] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[2701] "Driver"         "Driver"         "Driver"         "Driver"         "Bicyclist"     
+[2706] "Parked Vehicle" "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[2711] "Driver"         "Driver"         "Driver"         "Driver"         "Bicyclist"     
+[2716] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[2721] "Bicyclist"      "Bicyclist"      "NA"             "Driver"         "Pedestrian"    
+[2726] "Bicyclist"      "NA"             "Bicyclist"      "Parked Vehicle" "NA"            
+[2731] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[2736] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[2741] "NA"             "Driver"         "Driver"         "Driver"         "Driver"        
+[2746] "Bicyclist"      "Parked Vehicle" "Driver"         "Driver"         "Driver"        
+[2751] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "NA"            
+[2756] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2761] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "NA"            
+[2766] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[2771] "Bicyclist"      "NA"             "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2776] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[2781] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[2786] "Bicyclist"      "Other"          "Driver"         "NA"             "Driver"        
+[2791] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[2796] "Driver"         "NA"             "Bicyclist"      "Bicyclist"      "Pedestrian"    
+[2801] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2806] "Pedestrian"     "Parked Vehicle" "Driver"         "Bicyclist"      "Bicyclist"     
+[2811] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[2816] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[2821] "NA"             "Bicyclist"      "NA"             "Driver"         "Driver"        
+[2826] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2831] "Bicyclist"      "Bicyclist"      "NA"             "Driver"         "Bicyclist"     
+[2836] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2841] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Driver"        
+[2846] "Bicyclist"      "NA"             "Bicyclist"      "Driver"         "Bicyclist"     
+[2851] "Driver"         "Driver"         "NA"             "Driver"         "Bicyclist"     
+[2856] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "NA"            
+[2861] "Bicyclist"      "Pedestrian"     "Bicyclist"      "Bicyclist"      "Driver"        
+[2866] "Bicyclist"      "Driver"         "Driver"         "Pedestrian"     "Driver"        
+[2871] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[2876] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[2881] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2886] "Driver"         "NA"             "Driver"         "Bicyclist"      "Bicyclist"     
+[2891] "NA"             "NA"             "Bicyclist"      "Parked Vehicle" "Driver"        
+[2896] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Parked Vehicle"
+[2901] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[2906] "Bicyclist"      "Driver"         "Bicyclist"      "Parked Vehicle" "Driver"        
+[2911] "Driver"         "Parked Vehicle" "Driver"         "Driver"         "Driver"        
+[2916] "Bicyclist"      "NA"             "NA"             "Bicyclist"      "Bicyclist"     
+[2921] "Bicyclist"      "NA"             "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2926] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[2931] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[2936] "Bicyclist"      "Driver"         "Driver"         "Other"          "Bicyclist"     
+[2941] "Driver"         "Bicyclist"      "Parked Vehicle" "Driver"         "Driver"        
+[2946] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "NA"            
+[2951] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Bicyclist"     
+[2956] "NA"             "NA"             "Bicyclist"      "NA"             "Driver"        
+[2961] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[2966] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[2971] "Driver"         "Parked Vehicle" "Bicyclist"      "Parked Vehicle" "NA"            
+[2976] "Driver"         "NA"             "Driver"         "Bicyclist"      "Bicyclist"     
+[2981] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[2986] "NA"             "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[2991] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[2996] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[3001] "NA"             "Driver"         "Bicyclist"      "NA"             "Driver"        
+[3006] "NA"             "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[3011] "Bicyclist"      "NA"             "Bicyclist"      "Bicyclist"      "Driver"        
+[3016] "Driver"         "Driver"         "Bicyclist"      "Driver"         "NA"            
+[3021] "Driver"         "Driver"         "Driver"         "NA"             "Driver"        
+[3026] "Pedestrian"     "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[3031] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[3036] "Bicyclist"      "NA"             "Driver"         "NA"             "Bicyclist"     
+[3041] "Driver"         "Pedestrian"     "Bicyclist"      "Bicyclist"      "NA"            
+[3046] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Pedestrian"    
+[3051] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[3056] "Driver"         "Bicyclist"      "Bicyclist"      "NA"             "Parked Vehicle"
+[3061] "Driver"         "Bicyclist"      "NA"             "Driver"         "NA"            
+[3066] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[3071] "Pedestrian"     "NA"             "Bicyclist"      "Driver"         "Bicyclist"     
+[3076] "Driver"         "Driver"         "Driver"         "NA"             "Driver"        
+[3081] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[3086] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[3091] "Bicyclist"      "NA"             "Pedestrian"     "Bicyclist"      "Parked Vehicle"
+[3096] "Bicyclist"      "NA"             "NA"             "Driver"         "Driver"        
+[3101] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[3106] "Driver"         "NA"             "NA"             "Parked Vehicle" "Driver"        
+[3111] "Bicyclist"      "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"     
+[3116] "Bicyclist"      "NA"             "Bicyclist"      "NA"             "Bicyclist"     
+[3121] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[3126] "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"      "Driver"        
+[3131] "Driver"         "NA"             "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[3136] "Bicyclist"      "NA"             "Driver"         "Driver"         "NA"            
+[3141] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[3146] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[3151] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[3156] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[3161] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[3166] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[3171] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[3176] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[3181] "Driver"         "NA"             "Pedestrian"     "Bicyclist"      "Bicyclist"     
+[3186] "Driver"         "Parked Vehicle" "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[3191] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[3196] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[3201] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[3206] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[3211] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[3216] "NA"             "Driver"         "Bicyclist"      "Driver"         "Parked Vehicle"
+[3221] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "NA"            
+[3226] "NA"             "NA"             "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[3231] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[3236] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[3241] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[3246] "Driver"         "Parked Vehicle" "Bicyclist"      "Driver"         "Bicyclist"     
+[3251] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[3256] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[3261] "NA"             "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[3266] "NA"             "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[3271] "Bicyclist"      "Driver"         "Driver"         "NA"             "Bicyclist"     
+[3276] "Driver"         "NA"             "Bicyclist"      "Bicyclist"      "Not Stated"    
+[3281] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[3286] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[3291] "Driver"         "Driver"         "Driver"         "Driver"         "Bicyclist"     
+[3296] "NA"             "Driver"         "Driver"         "Bicyclist"      "NA"            
+[3301] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Parked Vehicle"
+[3306] "NA"             "NA"             "Bicyclist"      "Driver"         "Bicyclist"     
+[3311] "Driver"         "Bicyclist"      "Bicyclist"      "NA"             "Parked Vehicle"
+[3316] "Bicyclist"      "Driver"         "Parked Vehicle" "Driver"         "Parked Vehicle"
+[3321] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "NA"            
+[3326] "Bicyclist"      "Bicyclist"      "Pedestrian"     "NA"             "Driver"        
+[3331] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Parked Vehicle"
+[3336] "Bicyclist"      "NA"             "Bicyclist"      "Driver"         "Driver"        
+[3341] "Driver"         "Driver"         "NA"             "Bicyclist"      "Driver"        
+[3346] "Bicyclist"      "Bicyclist"      "Driver"         "NA"             "Parked Vehicle"
+[3351] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[3356] "Pedestrian"     "NA"             "Bicyclist"      "Bicyclist"      "Driver"        
+[3361] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[3366] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[3371] "Bicyclist"      "Driver"         "NA"             "Driver"         "NA"            
+[3376] "Driver"         "Bicyclist"      "Bicyclist"      "Pedestrian"     "Driver"        
+[3381] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Driver"        
+[3386] "NA"             "Bicyclist"      "Driver"         "NA"             "Bicyclist"     
+[3391] "Driver"         "Driver"         "Bicyclist"      "Parked Vehicle" "Driver"        
+[3396] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[3401] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Parked Vehicle"
+[3406] "Driver"         "Driver"         "Driver"         "Driver"         "Bicyclist"     
+[3411] "Bicyclist"      "NA"             "Bicyclist"      "Bicyclist"      "Pedestrian"    
+[3416] "NA"             "Bicyclist"      "Driver"         "Pedestrian"     "Bicyclist"     
+[3421] "Driver"         "Pedestrian"     "Pedestrian"     "Driver"         "Bicyclist"     
+[3426] "Driver"         "Bicyclist"      "NA"             "Bicyclist"      "Driver"        
+[3431] "NA"             "Bicyclist"      "Driver"         "Driver"         "NA"            
+[3436] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[3441] "Driver"         "Driver"         "Bicyclist"      "NA"             "Driver"        
+[3446] "NA"             "NA"             "Driver"         "Driver"         "Bicyclist"     
+[3451] "Bicyclist"      "Driver"         "Driver"         "Pedestrian"     "Bicyclist"     
+[3456] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[3461] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[3466] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[3471] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[3476] "Driver"         "NA"             "Bicyclist"      "Driver"         "Bicyclist"     
+[3481] "Bicyclist"      "Driver"         "NA"             "Pedestrian"     "NA"            
+[3486] "Pedestrian"     "NA"             "Bicyclist"      "Driver"         "Bicyclist"     
+[3491] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[3496] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[3501] "Bicyclist"      "Parked Vehicle" "Driver"         "Bicyclist"      "Bicyclist"     
+[3506] "Bicyclist"      "NA"             "NA"             "Bicyclist"      "Pedestrian"    
+[3511] "Driver"         "Driver"         "Driver"         "Driver"         "Bicyclist"     
+[3516] "Driver"         "Driver"         "Driver"         "Driver"         "Bicyclist"     
+[3521] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[3526] "Driver"         "NA"             "Bicyclist"      "Driver"         "Bicyclist"     
+[3531] "Driver"         "Driver"         "Driver"         "Driver"         "Bicyclist"     
+[3536] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[3541] "Bicyclist"      "Driver"         "NA"             "NA"             "Bicyclist"     
+[3546] "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"      "NA"            
+[3551] "NA"             "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[3556] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Parked Vehicle"
+[3561] "NA"             "NA"             "Bicyclist"      "Parked Vehicle" "Driver"        
+[3566] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[3571] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[3576] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[3581] "Bicyclist"      "NA"             "Bicyclist"      "Bicyclist"      "NA"            
+[3586] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[3591] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[3596] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[3601] "NA"             "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[3606] "Bicyclist"      "Driver"         "Driver"         "NA"             "Bicyclist"     
+[3611] "Driver"         "Driver"         "NA"             "Bicyclist"      "Driver"        
+[3616] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[3621] "Bicyclist"      "Driver"         "Bicyclist"      "NA"             "Driver"        
+[3626] "NA"             "Driver"         "Bicyclist"      "Driver"         "NA"            
+[3631] "NA"             "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[3636] "Driver"         "Bicyclist"      "NA"             "Bicyclist"      "Driver"        
+[3641] "Driver"         "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"     
+[3646] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[3651] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[3656] "Driver"         "Driver"         "NA"             "Driver"         "Bicyclist"     
+[3661] "Driver"         "Driver"         "NA"             "Bicyclist"      "Driver"        
+[3666] "NA"             "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[3671] "Parked Vehicle" "Driver"         "Driver"         "Driver"         "NA"            
+[3676] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[3681] "Driver"         "Bicyclist"      "Bicyclist"      "NA"             "NA"            
+[3686] "Driver"         "Driver"         "Parked Vehicle" "Driver"         "Driver"        
+[3691] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[3696] "Bicyclist"      "Bicyclist"      "NA"             "Driver"         "Bicyclist"     
+[3701] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "NA"            
+[3706] "Driver"         "Driver"         "Driver"         "Driver"         "Driver"        
+[3711] "NA"             "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[3716] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "NA"            
+[3721] "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"      "Bicyclist"     
+[3726] "Driver"         "Other"          "NA"             "Bicyclist"      "Bicyclist"     
+[3731] "Driver"         "Driver"         "Driver"         "Driver"         "Driver"        
+[3736] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[3741] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[3746] "Bicyclist"      "Driver"         "NA"             "Bicyclist"      "Bicyclist"     
+[3751] "Driver"         "NA"             "Pedestrian"     "Driver"         "Bicyclist"     
+[3756] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[3761] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[3766] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Parked Vehicle"
+[3771] "NA"             "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[3776] "Driver"         "Driver"         "NA"             "Driver"         "Bicyclist"     
+[3781] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Pedestrian"    
+[3786] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Driver"        
+[3791] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[3796] "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"      "NA"            
+[3801] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[3806] "Bicyclist"      "Bicyclist"      "Bicyclist"      "NA"             "Driver"        
+[3811] "Bicyclist"      "Parked Vehicle" "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[3816] "NA"             "Bicyclist"      "Parked Vehicle" "Bicyclist"      "NA"            
+[3821] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[3826] "Driver"         "Bicyclist"      "NA"             "NA"             "Bicyclist"     
+[3831] "NA"             "Driver"         "Driver"         "Bicyclist"      "NA"            
+[3836] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[3841] "Driver"         "Driver"         "NA"             "NA"             "Bicyclist"     
+[3846] "NA"             "Bicyclist"      "Driver"         "Driver"         "Parked Vehicle"
+[3851] "Driver"         "Driver"         "NA"             "Bicyclist"      "Driver"        
+[3856] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Driver"        
+[3861] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[3866] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "NA"            
+[3871] "Driver"         "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"     
+[3876] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[3881] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[3886] "Driver"         "Driver"         "NA"             "Driver"         "NA"            
+[3891] "Pedestrian"     "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[3896] "Driver"         "Driver"         "Driver"         "Driver"         "Pedestrian"    
+[3901] "Other"          "Driver"         "Pedestrian"     "Bicyclist"      "Bicyclist"     
+[3906] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[3911] "Bicyclist"      "Bicyclist"      "NA"             "NA"             "Bicyclist"     
+[3916] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[3921] "Parked Vehicle" "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[3926] "Driver"         "Bicyclist"      "Driver"         "Other"          "Driver"        
+[3931] "Bicyclist"      "Pedestrian"     "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[3936] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Bicyclist"     
+[3941] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[3946] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "NA"            
+[3951] "NA"             "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[3956] "Driver"         "Bicyclist"      "NA"             "Driver"         "Driver"        
+[3961] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "NA"            
+[3966] "Driver"         "NA"             "Driver"         "Driver"         "Driver"        
+[3971] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Bicyclist"     
+[3976] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[3981] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[3986] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[3991] "Bicyclist"      "NA"             "Bicyclist"      "Driver"         "Driver"        
+[3996] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[4001] "Bicyclist"      "Parked Vehicle" "Bicyclist"      "Bicyclist"      "Driver"        
+[4006] "NA"             "Bicyclist"      "Bicyclist"      "Parked Vehicle" "NA"            
+[4011] "Bicyclist"      "Driver"         "Pedestrian"     "Bicyclist"      "Driver"        
+[4016] "NA"             "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[4021] "Bicyclist"      "Driver"         "NA"             "Bicyclist"      "Bicyclist"     
+[4026] "NA"             "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[4031] "Driver"         "Driver"         "Driver"         "NA"             "Bicyclist"     
+[4036] "Bicyclist"      "Pedestrian"     "Bicyclist"      "Driver"         "NA"            
+[4041] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[4046] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "NA"            
+[4051] "Bicyclist"      "Driver"         "Bicyclist"      "NA"             "Driver"        
+[4056] "Driver"         "Bicyclist"      "NA"             "Bicyclist"      "Driver"        
+[4061] "NA"             "Driver"         "Driver"         "Driver"         "Driver"        
+[4066] "Bicyclist"      "Driver"         "NA"             "Driver"         "NA"            
+[4071] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[4076] "Driver"         "NA"             "Bicyclist"      "Bicyclist"      "Driver"        
+[4081] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[4086] "NA"             "Driver"         "NA"             "Bicyclist"      "Bicyclist"     
+[4091] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[4096] "Pedestrian"     "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[4101] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[4106] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[4111] "Driver"         "Driver"         "Parked Vehicle" "Bicyclist"      "Bicyclist"     
+[4116] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Driver"        
+[4121] "Driver"         "Pedestrian"     "NA"             "Bicyclist"      "Driver"        
+[4126] "Driver"         "Driver"         "Driver"         "NA"             "NA"            
+[4131] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[4136] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[4141] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[4146] "NA"             "Driver"         "Driver"         "Driver"         "Driver"        
+[4151] "Bicyclist"      "Bicyclist"      "Driver"         "NA"             "Driver"        
+[4156] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[4161] "Driver"         "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"     
+[4166] "Bicyclist"      "Bicyclist"      "NA"             "Driver"         "Bicyclist"     
+[4171] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[4176] "NA"             "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[4181] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[4186] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Parked Vehicle"
+[4191] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[4196] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[4201] "Bicyclist"      "Bicyclist"      "Driver"         "Pedestrian"     "Driver"        
+[4206] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[4211] "Driver"         "Parked Vehicle" "NA"             "Bicyclist"      "Driver"        
+[4216] "Driver"         "Driver"         "NA"             "Bicyclist"      "Bicyclist"     
+[4221] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[4226] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[4231] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[4236] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[4241] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[4246] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[4251] "Bicyclist"      "Driver"         "Bicyclist"      "Other"          "Bicyclist"     
+[4256] "Parked Vehicle" "NA"             "Driver"         "Driver"         "Bicyclist"     
+[4261] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[4266] "Driver"         "Driver"         "Driver"         "Driver"         "Driver"        
+[4271] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[4276] "Parked Vehicle" "Driver"         "Parked Vehicle" "Bicyclist"      "Bicyclist"     
+[4281] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[4286] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[4291] "Driver"         "NA"             "Driver"         "NA"             "Bicyclist"     
+[4296] "NA"             "Bicyclist"      "Driver"         "Bicyclist"      "NA"            
+[4301] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[4306] "Bicyclist"      "Bicyclist"      "NA"             "Driver"         "Parked Vehicle"
+[4311] "Bicyclist"      "Driver"         "Bicyclist"      "NA"             "Driver"        
+[4316] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Parked Vehicle"
+[4321] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "NA"            
+[4326] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[4331] "NA"             "Parked Vehicle" "Driver"         "Bicyclist"      "Bicyclist"     
+[4336] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[4341] "Bicyclist"      "Other"          "Bicyclist"      "NA"             "Bicyclist"     
+[4346] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[4351] "Driver"         "Bicyclist"      "NA"             "Driver"         "Driver"        
+[4356] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[4361] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[4366] "Bicyclist"      "NA"             "Parked Vehicle" "Bicyclist"      "Bicyclist"     
+[4371] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[4376] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[4381] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[4386] "Driver"         "Driver"         "Driver"         "NA"             "Driver"        
+[4391] "Driver"         "Driver"         "Driver"         "Driver"         "Driver"        
+[4396] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[4401] "Driver"         "NA"             "Pedestrian"     "Bicyclist"      "Parked Vehicle"
+[4406] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[4411] "Driver"         "NA"             "Driver"         "Bicyclist"      "Bicyclist"     
+[4416] "Driver"         "Driver"         "Parked Vehicle" "NA"             "NA"            
+[4421] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "NA"            
+[4426] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[4431] "Driver"         "Driver"         "Bicyclist"      "Driver"         "NA"            
+[4436] "NA"             "NA"             "Bicyclist"      "Driver"         "Bicyclist"     
+[4441] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[4446] "Bicyclist"      "Bicyclist"      "Bicyclist"      "NA"             "Driver"        
+[4451] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[4456] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[4461] "Bicyclist"      "Driver"         "Bicyclist"      "NA"             "Driver"        
+[4466] "Driver"         "Driver"         "Bicyclist"      "NA"             "Driver"        
+[4471] "Driver"         "Driver"         "Driver"         "Driver"         "Driver"        
+[4476] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Other"         
+[4481] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[4486] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[4491] "Driver"         "Driver"         "Driver"         "Driver"         "Driver"        
+[4496] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[4501] "NA"             "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[4506] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[4511] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[4516] "Driver"         "NA"             "NA"             "Driver"         "Driver"        
+[4521] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[4526] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[4531] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[4536] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[4541] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[4546] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[4551] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[4556] "Bicyclist"      "Driver"         "Parked Vehicle" "Driver"         "Driver"        
+[4561] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Pedestrian"    
+[4566] "NA"             "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[4571] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[4576] "NA"             "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[4581] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[4586] "Parked Vehicle" "Bicyclist"      "Driver"         "Driver"         "NA"            
+[4591] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[4596] "Driver"         "NA"             "Bicyclist"      "Bicyclist"      "Driver"        
+[4601] "NA"             "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[4606] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[4611] "Driver"         "Bicyclist"      "NA"             "Driver"         "Bicyclist"     
+[4616] "Bicyclist"      "Bicyclist"      "Driver"         "NA"             "Bicyclist"     
+[4621] "Driver"         "Driver"         "Driver"         "Bicyclist"      "NA"            
+[4626] "Driver"         "Driver"         "Driver"         "Parked Vehicle" "Bicyclist"     
+[4631] "Bicyclist"      "Driver"         "NA"             "Driver"         "Bicyclist"     
+[4636] "Driver"         "NA"             "Driver"         "Bicyclist"      "Bicyclist"     
+[4641] "Bicyclist"      "Driver"         "Bicyclist"      "NA"             "Driver"        
+[4646] "Bicyclist"      "Bicyclist"      "Parked Vehicle" "NA"             "Driver"        
+[4651] "Driver"         "Parked Vehicle" "Driver"         "Driver"         "Bicyclist"     
+[4656] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[4661] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "NA"            
+[4666] "Bicyclist"      "NA"             "Driver"         "Driver"         "Bicyclist"     
+[4671] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[4676] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Driver"        
+[4681] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[4686] "Bicyclist"      "Parked Vehicle" "Bicyclist"      "Bicyclist"      "Driver"        
+[4691] "Bicyclist"      "Bicyclist"      "Other"          "Bicyclist"      "Driver"        
+[4696] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[4701] "Driver"         "Bicyclist"      "NA"             "Driver"         "Driver"        
+[4706] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[4711] "Bicyclist"      "NA"             "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[4716] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[4721] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[4726] "Driver"         "Bicyclist"      "Driver"         "Bicyclist"      "NA"            
+[4731] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[4736] "Pedestrian"     "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[4741] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[4746] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[4751] "Driver"         "Driver"         "Pedestrian"     "Driver"         "Bicyclist"     
+[4756] "Driver"         "Driver"         "NA"             "NA"             "Bicyclist"     
+[4761] "Driver"         "Bicyclist"      "Parked Vehicle" "Bicyclist"      "Bicyclist"     
+[4766] "Pedestrian"     "Pedestrian"     "Bicyclist"      "Driver"         "Driver"        
+[4771] "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"      "Driver"        
+[4776] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[4781] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[4786] "NA"             "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[4791] "Bicyclist"      "Bicyclist"      "NA"             "Driver"         "Driver"        
+[4796] "Driver"         "Driver"         "NA"             "Bicyclist"      "Bicyclist"     
+[4801] "Driver"         "Driver"         "Driver"         "Driver"         "Driver"        
+[4806] "Driver"         "Driver"         "NA"             "Bicyclist"      "Bicyclist"     
+[4811] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[4816] "NA"             "Driver"         "Driver"         "NA"             "Driver"        
+[4821] "Driver"         "Driver"         "Bicyclist"      "Driver"         "NA"            
+[4826] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "Bicyclist"     
+[4831] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[4836] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Bicyclist"     
+[4841] "Driver"         "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[4846] "Driver"         "Driver"         "NA"             "Bicyclist"      "Bicyclist"     
+[4851] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Driver"        
+[4856] "Driver"         "Driver"         "Driver"         "Driver"         "Driver"        
+[4861] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[4866] "NA"             "Bicyclist"      "Bicyclist"      "Bicyclist"      "NA"            
+[4871] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[4876] "Bicyclist"      "Parked Vehicle" "Bicyclist"      "Driver"         "Bicyclist"     
+[4881] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[4886] "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"      "Driver"        
+[4891] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[4896] "Bicyclist"      "Bicyclist"      "NA"             "Driver"         "NA"            
+[4901] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[4906] "Bicyclist"      "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[4911] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[4916] "Bicyclist"      "Other"          "Bicyclist"      "Driver"         "Driver"        
+[4921] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[4926] "Driver"         "Driver"         "Parked Vehicle" "Bicyclist"      "Bicyclist"     
+[4931] "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"      "Bicyclist"     
+[4936] "Driver"         "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[4941] "Bicyclist"      "Driver"         "NA"             "Pedestrian"     "Driver"        
+[4946] "Bicyclist"      "Driver"         "NA"             "Bicyclist"      "Bicyclist"     
+[4951] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[4956] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[4961] "Driver"         "NA"             "Driver"         "Bicyclist"      "Bicyclist"     
+[4966] "Driver"         "NA"             "Bicyclist"      "Driver"         "NA"            
+[4971] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[4976] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Driver"        
+[4981] "Bicyclist"      "Parked Vehicle" "Bicyclist"      "Parked Vehicle" "Bicyclist"     
+[4986] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Bicyclist"     
+[4991] "Driver"         "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[4996] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[5001] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[5006] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Other"         
+[5011] "Driver"         "Bicyclist"      "Bicyclist"      "NA"             "Bicyclist"     
+[5016] "Parked Vehicle" "Bicyclist"      "Driver"         "NA"             "Driver"        
+[5021] "Bicyclist"      "Driver"         "Driver"         "Driver"         "Parked Vehicle"
+[5026] "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"      "Driver"        
+[5031] "Driver"         "Driver"         "Driver"         "Parked Vehicle" "Bicyclist"     
+[5036] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"         "Bicyclist"     
+[5041] "Parked Vehicle" "Bicyclist"      "Driver"         "Bicyclist"      "Parked Vehicle"
+[5046] "Driver"         "Bicyclist"      "Bicyclist"      "NA"             "NA"            
+[5051] "Bicyclist"      "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[5056] "Driver"         "Driver"         "Driver"         "Bicyclist"      "Driver"        
+[5061] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[5066] "Bicyclist"      "Driver"         "Parked Vehicle" "NA"             "Driver"        
+[5071] "Bicyclist"      "Bicyclist"      "Driver"         "Pedestrian"     "Driver"        
+[5076] "Driver"         "Driver"         "Driver"         "Driver"         "Bicyclist"     
+[5081] "NA"             "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[5086] "Bicyclist"      "Bicyclist"      "Driver"         "NA"             "Driver"        
+[5091] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Driver"        
+[5096] "NA"             "Driver"         "Driver"         "Driver"         "Parked Vehicle"
+[5101] "Driver"         "Driver"         "Bicyclist"      "Driver"         "Bicyclist"     
+[5106] "Driver"         "Bicyclist"      "Pedestrian"     "Other"          "NA"            
+[5111] "NA"             "Bicyclist"      "Driver"         "NA"             "Driver"        
+[5116] "Bicyclist"      "Driver"         "Driver"         "Bicyclist"      "NA"            
+[5121] "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"      "Bicyclist"     
+[5126] "Driver"         "Bicyclist"      "Driver"         "Driver"         "Bicyclist"     
+[5131] "Bicyclist"      "Driver"         "Driver"        
+> aggregate(data$at.fault, list(data$year, data$at.fault), length)
+   Group.1        Group.2   x
+1     2000      Bicyclist 174
+2     2001      Bicyclist 171
+3     2002      Bicyclist 137
+4     2003      Bicyclist 166
+5     2004      Bicyclist 148
+6     2005      Bicyclist 171
+7     2006      Bicyclist 159
+8     2007      Bicyclist 202
+9     2008      Bicyclist 213
+10    2009      Bicyclist 235
+11    2010      Bicyclist 278
+12    2011      Bicyclist 276
+13    2000         Driver 171
+14    2001         Driver 171
+15    2002         Driver 134
+16    2003         Driver 108
+17    2004         Driver 127
+18    2005         Driver 132
+19    2006         Driver 135
+20    2007         Driver 191
+21    2008         Driver 194
+22    2009         Driver 218
+23    2010         Driver 267
+24    2011         Driver 225
+25    2000             NA  13
+26    2001             NA  20
+27    2002             NA  22
+28    2003             NA  23
+29    2004             NA  29
+30    2005             NA  30
+31    2006             NA  49
+32    2007             NA  49
+33    2008             NA  59
+34    2009             NA  72
+35    2010             NA  59
+36    2011             NA  50
+37    2002     Not Stated   2
+38    2003     Not Stated   2
+39    2006     Not Stated   1
+40    2007     Not Stated   1
+41    2008     Not Stated   1
+42    2002          Other   2
+43    2004          Other   2
+44    2005          Other   1
+45    2007          Other   1
+46    2008          Other   1
+47    2009          Other   2
+48    2010          Other   4
+49    2011          Other   4
+50    2000 Parked Vehicle   5
+51    2001 Parked Vehicle   7
+52    2002 Parked Vehicle  13
+53    2003 Parked Vehicle   9
+54    2004 Parked Vehicle  11
+55    2005 Parked Vehicle  13
+56    2006 Parked Vehicle   6
+57    2007 Parked Vehicle  13
+58    2008 Parked Vehicle  19
+59    2009 Parked Vehicle  12
+60    2010 Parked Vehicle  14
+61    2011 Parked Vehicle  18
+62    2000     Pedestrian   7
+63    2001     Pedestrian   6
+64    2002     Pedestrian   4
+65    2003     Pedestrian  10
+66    2004     Pedestrian   8
+67    2005     Pedestrian   7
+68    2006     Pedestrian   4
+69    2007     Pedestrian   8
+70    2008     Pedestrian   8
+71    2009     Pedestrian  14
+72    2010     Pedestrian   7
+73    2011     Pedestrian   8
+> 
+> at_fault_agg <-  aggregate(data$at.fault, list(data$year, data$at.fault), length)
+> names(at_fault_agg) <- c("year", "group", "fault")
+> 
+> year_totals <- aggregate(data$at.fault, list(data$year), length)
+> 
+> names(year_totals) <- c("year", "total_crash")
+> merge(at_fault_agg, year_totals, by="year")
+   year          group fault total_crash
+1  2000      Bicyclist   174         370
+2  2000     Pedestrian     7         370
+3  2000 Parked Vehicle     5         370
+4  2000             NA    13         370
+5  2000         Driver   171         370
+6  2001      Bicyclist   171         375
+7  2001     Pedestrian     6         375
+8  2001 Parked Vehicle     7         375
+9  2001         Driver   171         375
+10 2001             NA    20         375
+11 2002      Bicyclist   137         314
+12 2002         Driver   134         314
+13 2002          Other     2         314
+14 2002     Not Stated     2         314
+15 2002             NA    22         314
+16 2002     Pedestrian     4         314
+17 2002 Parked Vehicle    13         314
+18 2003      Bicyclist   166         318
+19 2003         Driver   108         318
+20 2003             NA    23         318
+21 2003     Not Stated     2         318
+22 2003 Parked Vehicle     9         318
+23 2003     Pedestrian    10         318
+24 2004      Bicyclist   148         325
+25 2004          Other     2         325
+26 2004         Driver   127         325
+27 2004             NA    29         325
+28 2004 Parked Vehicle    11         325
+29 2004     Pedestrian     8         325
+30 2005          Other     1         354
+31 2005      Bicyclist   171         354
+32 2005             NA    30         354
+33 2005         Driver   132         354
+34 2005 Parked Vehicle    13         354
+35 2005     Pedestrian     7         354
+36 2006             NA    49         354
+37 2006 Parked Vehicle     6         354
+38 2006     Not Stated     1         354
+39 2006      Bicyclist   159         354
+40 2006     Pedestrian     4         354
+41 2006         Driver   135         354
+42 2007          Other     1         465
+43 2007     Not Stated     1         465
+44 2007      Bicyclist   202         465
+45 2007 Parked Vehicle    13         465
+46 2007         Driver   191         465
+47 2007     Pedestrian     8         465
+48 2007             NA    49         465
+49 2008          Other     1         495
+50 2008     Not Stated     1         495
+51 2008 Parked Vehicle    19         495
+52 2008      Bicyclist   213         495
+53 2008     Pedestrian     8         495
+54 2008         Driver   194         495
+55 2008             NA    59         495
+56 2009      Bicyclist   235         553
+57 2009          Other     2         553
+58 2009         Driver   218         553
+59 2009 Parked Vehicle    12         553
+60 2009             NA    72         553
+61 2009     Pedestrian    14         553
+62 2010         Driver   267         629
+63 2010          Other     4         629
+64 2010 Parked Vehicle    14         629
+65 2010      Bicyclist   278         629
+66 2010             NA    59         629
+67 2010     Pedestrian     7         629
+68 2011             NA    50         581
+69 2011 Parked Vehicle    18         581
+70 2011          Other     4         581
+71 2011         Driver   225         581
+72 2011      Bicyclist   276         581
+73 2011     Pedestrian     8         581
+> 
+> at_fault_pct <- merge(at_fault_agg, year_totals, by="year")
+> 
+> at_fault_pct$pct <- at_fault_pct$fault/ at_fault_pct$total_crash
+> 
+> ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_brewer(palette="BuPu")
+Mapping a variable to y and also using stat="bin".
+  With stat="bin", it will attempt to set the y value to the count of cases in each group.
+  This can result in unexpected behavior and will not be allowed in a future version of ggplot2.
+  If you want y to represent counts of cases, use stat="bin" and don't map a variable to y.
+  If you want y to represent values in the data, use stat="identity".
+  See ?geom_bar for examples. (Deprecated; last used in version 0.9.2)
+> ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", title="who is at fault for injury accidents") + geom_bar()
+Mapping a variable to y and also using stat="bin".
+  With stat="bin", it will attempt to set the y value to the count of cases in each group.
+  This can result in unexpected behavior and will not be allowed in a future version of ggplot2.
+  If you want y to represent counts of cases, use stat="bin" and don't map a variable to y.
+  If you want y to represent values in the data, use stat="identity".
+  See ?geom_bar for examples. (Deprecated; last used in version 0.9.2)
+> 
+> at_fault_pct$fault/ at_fault_pct$total_crash
+ [1] 0.470270270 0.018918919 0.013513514 0.035135135 0.462162162 0.456000000 0.016000000
+ [8] 0.018666667 0.456000000 0.053333333 0.436305732 0.426751592 0.006369427 0.006369427
+[15] 0.070063694 0.012738854 0.041401274 0.522012579 0.339622642 0.072327044 0.006289308
+[22] 0.028301887 0.031446541 0.455384615 0.006153846 0.390769231 0.089230769 0.033846154
+[29] 0.024615385 0.002824859 0.483050847 0.084745763 0.372881356 0.036723164 0.019774011
+[36] 0.138418079 0.016949153 0.002824859 0.449152542 0.011299435 0.381355932 0.002150538
+[43] 0.002150538 0.434408602 0.027956989 0.410752688 0.017204301 0.105376344 0.002020202
+[50] 0.002020202 0.038383838 0.430303030 0.016161616 0.391919192 0.119191919 0.424954792
+[57] 0.003616637 0.394213382 0.021699819 0.130198915 0.025316456 0.424483307 0.006359300
+[64] 0.022257552 0.441971383 0.093799682 0.011128776 0.086058520 0.030981067 0.006884682
+[71] 0.387263339 0.475043029 0.013769363
+> at_fault_pct$pct <- at_fault_pct$fault/ at_fault_pct$total_crash
+> ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", title="who is at fault for injury accidents") + geom_bar()
+Mapping a variable to y and also using stat="bin".
+  With stat="bin", it will attempt to set the y value to the count of cases in each group.
+  This can result in unexpected behavior and will not be allowed in a future version of ggplot2.
+  If you want y to represent counts of cases, use stat="bin" and don't map a variable to y.
+  If you want y to represent values in the data, use stat="identity".
+  See ?geom_bar for examples. (Deprecated; last used in version 0.9.2)
+> ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_brewer(palette="BuPu")
+Mapping a variable to y and also using stat="bin".
+  With stat="bin", it will attempt to set the y value to the count of cases in each group.
+  This can result in unexpected behavior and will not be allowed in a future version of ggplot2.
+  If you want y to represent counts of cases, use stat="bin" and don't map a variable to y.
+  If you want y to represent values in the data, use stat="identity".
+  See ?geom_bar for examples. (Deprecated; last used in version 0.9.2)
+> 

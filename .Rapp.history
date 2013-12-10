@@ -829,112 +829,96 @@ buckets <- cut(map_data$guns, breaks=map_breaks)#
 numeric_buckets <- as.numeric(buckets)#
 colors <- brewer.pal(9, "YlOrRd")#
 plot(shapes, col=colors[numeric_buckets])
-setwd('~/dataviz-fall-2013/bike-crash')#
-#
-data <- read.csv("bike_collision.csv", stringsAsFactors=F)#
-#
-data$newDate <- data$DATE
-head(data$newDate)
-data$newDate
-head(data$DATE)
-setwd('~/dataviz-fall-2013/bike-crash')#
-#
-data <- read.csv("bike_collision.csv", stringsAsFactors=F)
+setwd('~/dataviz-fall-2013/bike-crash/')
+data <- read.csv('bike_collision.csv')
 head(data)
-data$newDate <- data$DATE
-head(data$newDate)
-data$newDate <- format(data$DATE, format="%m/%d/%y")
-data$newDate <- data$DATE
-head(data$newDate)
-summary(data$newDate)
-head(data$DATE)
-names(data)
-data$newDate <- data$date
+data <- read.csv('bike_collision.csv', stringsAsFactors=F)
 date$year <- format(as.Date(data$newDate, format="%m/%d/%y"), "%Y")
+date$year <- as.Date(data$newDate, format="%m/%d/%y")
+data$newDate <- data$DATE
+date$year <- format(as.Date(data$newDate, format="%m/%d/%y"), "%Y")
+head(newDate)
+data$newDate <- data$date
+head(newDate)
+names(date)
+names(data)
 head(data$date)
+data$newDate <- data$date
 head(data$newDate)
-date$year <- format(as.Date(data$newDate, format="%m-%d%-y"), "%Y")
-data$year <- format(as.Date(data$newDate, format="%m-%d%-y"), "%Y")
-head(data$year)
-data$year <- format(as.Date(data$newDate, format="%m-%d%-%y"), "%Y")
-head(data$year)
-head(data)
+date$year <- format(as.Date(data$newDate, format="%m/%d/%y"), "%Y")
+class(data$newDate)
+date$year <- as.Date(data$newDate, format="%m/%d/%y")
 data$year <- format(as.Date(data$newDate, format="%m/%d/%y"), "%Y")
 head(data$year)
 data$at.fault <- NA
-party_at_fault_2_indexes <- which(data$party.at.fault == 2)
+party_at_fault_2_indexes <- which(data$party.at.fault == 2)#
 data$at.fault[party_at_fault_2_indexes] <- data$Party.Type.2[party_at_fault_2_indexes]
 head(data$at.fault)
 party_at_fault_1_indexes <- which(data$party.at.fault == 1)#
 data$at.fault[party_at_fault_1_indexes] <- data$Party.Type.1[party_at_fault_1_indexes]
 head(data$at.fault)
 aggregate(data$at.fault, list(data$year, data$at.fault), length)
-at_fault_agg <- ggregate(data$at.fault, list(data$year, data$at.fault), length)#
-#
-#rename#
+at_fault_agg <- aggregate(data$at.fault, list(data$year, data$at.fault), length)
 names(at_fault_agg) <- c("year", "group", "fault")
-at_fault_agg <- aggregate(data$at.fault, list(data$year, data$at.fault), length)#
-#
-#rename#
-names(at_fault_agg) <- c("year", "group", "fault")
-bikes <- subset(at_fault_agg, group=="Bicyclist")
-driver <- subset(at_fault_agg, group=="Driver")
-plot(bikes$year, bikes$fault, type="l")
-barplot(t(bike$year, bike$fault), (driver$year, driver$fault), col=heat.colors(2), space=0.1)
-barplot(t(bike$year, bike$fault) (driver$year, driver$fault), col=heat.colors(2), space=0.1)
-barplot(t(bikes$year, bikes$fault) (driver$year, driver$fault), col=heat.colors(2), space=0.1)
-barplot(t(bikes$year, bikes$fault), col=heat.colors(2), space=0.1)
-barplot(t(bikes$year, bikes$fault))
-install.packages('ggplot2')
-library(ggplot2)
-ggplot(bikes$year, bikes$fault)
-ggplot(aes(bikes$year, bikes$fault) + (driver$year, driver$fault))
-ggplot(aes(bikes$year, bikes$fault) + (driver$year, driver$fault), ylim=c(0,400))
-ggplot(aes(at_fault_agg$year, (bikes$fault, driver$fault), ylim=c(0,400))
-ggplot(aes(at_fault_agg$year (bikes$fault, driver$fault), ylim=c(0,400))
-)
-ggplot(aes(at_fault_agg$year, (bikes$fault, driver$fault)), ylim=c(0,400)
-ggplot(aes(at_fault_agg$year (bikes$fault, driver$fault)), ylim=c(0,400)
-)
-ggplot(data=at_fault_agg, aes(x=at_fault_agg$fault, y=at_fault_agg$year, fill=at_fault_agg$group)) + geom_bar()
-ggplot(data=at_fault_agg, aes(x=at_fault_agg$year, y=at_fault_agg$fault, fill=at_fault_agg$group)) + geom_bar()
-ggplot(data=at_fault_agg, aes(x=at_fault_agg$year, y=at_fault_agg$fault, fill=at_fault_agg$group), ylim=c(0,400)) + geom_bar()
-head(data)
-bikes <- subset(at_fault_agg, group=="Bicyclist")
-subset(at_fault_agg, group=="Bicyclist")
-at_fault_agg
-at_fault_agg <- aggregate(data$at.fault, list(data$year), length)
-at_fault_agg <- aggregate(data$at.fault, list(data$year, data$at.fault), length)#
-#
-#rename#
-names(at_fault_agg) <- c("year", "group", "fault")
-at_fault_agg
-aggregate(data$at.fault, list(data$year), length)
 year_totals <- aggregate(data$at.fault, list(data$year), length)
-names(year_totals) <- c("year", "total_crash")
+names(year_totals) <- c("year", "crashes")
+at_fault_pct <- merge(at_fault_agg, year_totals, by="year")
+at_fault_pct$pct <- at_fault_pct$fault/ at_fault_pct$total_crash
+head(at_fault_pct)
+merge(at_fault_agg, year_totals, by="year")
+at_fault_pct <- merge(at_fault_agg, year_totals, by="year")
+at_fault_pct$pct <- at_fault_pct$fault/ at_fault_pct$crashes
+data$at.fault.clean[is.na(data$at.fault.clean)] <- "NA"
+data$at_fault_clean[is.na(data$at_fault_clean)] <- "NA"
+ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_brewer()
+library(ggplot)
+library("RColorBrewer")
+library("ggplot2")
+ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_brewer()
+ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_manual(values=c("#AB2B52", "#894873", "#6c628f", "#5674a4"))
+ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_manual(values=c("PuRd"))
+ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_brewer(palette="RdPu"))
+ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_brewer(palette="RdPu")
+ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_brewer(palette="PRGn")
+ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_brewer(palette="BuPu")
+data$at.fault.clean[is.na(data$at.fault.clean)] <- "NA"
+class(data$year)
+data$year <- format(as.Date(data$newDate, format="%m/%d/%y"), "%Y")
+class(data$year)
+data$newDate <- data$date
+head(data$date)
+data$year <- format(as.Date(data$newDate, format="%m/%d/%y"), "%Y")
+head(data$year)
+data$at.fault.clean[is.na(data$at.fault.clean)] <- "NA"
+data$at.fault <- NA
+party_at_fault_2_indexes <- which(data$party.at.fault == 2)#
+data$at.fault[party_at_fault_2_indexes] <- data$Party.Type.2[party_at_fault_2_indexes]#
+party_at_fault_1_indexes <- which(data$party.at.fault == 1)#
+data$at.fault[party_at_fault_1_indexes] <- data$Party.Type.1[party_at_fault_1_indexes]
+data$at.fault.clean[is.na(data$at.fault.clean)] <- "NA"
+party_at_fault_2_indexes <- which(data$party.at.fault == 2)#
+data$at.fault[party_at_fault_2_indexes] <- data$Party.Type.2[party_at_fault_2_indexes]#
+party_at_fault_1_indexes <- which(data$party.at.fault == 1)#
+data$at.fault[party_at_fault_1_indexes] <- data$Party.Type.1[party_at_fault_1_indexes]
+head(data$at.fault.clean)
+head(data$at.fault)
+is.na(data$at.fault)
+data$at.fault.clean[is.na(data$at.fault.clean)] <- "NA"
+head(data$at.fault)
+data$at.fault.clean[is.na(data$at.fault.clean)] <- "NA"
+data$at.fault[is.na(data$at.fault)] <- "NA"
+data$at.fault
+aggregate(data$at.fault, list(data$year, data$at.fault), length)
+at_fault_agg <-  aggregate(data$at.fault, list(data$year, data$at.fault), length)
+names(at_fault_agg) <- c("year", "group", "fault")
+year_totals <- aggregate(data$at.fault, list(data$year), length)
+names(year_totals) <- c("year", "total_crash")#
 merge(at_fault_agg, year_totals, by="year")
 at_fault_pct <- merge(at_fault_agg, year_totals, by="year")
 at_fault_pct$pct <- at_fault_pct$fault/ at_fault_pct$total_crash
-head(at_fault_pct$pct)
-head(at_fault_pct)
-ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_agg$group), ylim=c(0,400)) + geom_bar()
-ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_agg$group), ylim=c(0,400)) + geom_bar()
-ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400)) + geom_bar()
+ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_brewer(palette="BuPu")
 ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", title="who is at fault for injury accidents") + geom_bar()
+at_fault_pct$fault/ at_fault_pct$total_crash
+at_fault_pct$pct <- at_fault_pct$fault/ at_fault_pct$total_crash
 ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", title="who is at fault for injury accidents") + geom_bar()
-names(data$Party.Type.1)
-summary(data$Party.Type.1)
-unique(data$Party.Type.1)
-data$Party.Type.1
-table(data$Party.Type.1)
-table(data$Party.Type.2)
-unique(data$Party.Type.2)
-unique(data$at.fault)
-at_fault_agg
-list(data$at.fault)
-data$test <- data$at.fault
-data$test
-data[is.na(data$test)]
-data$test[is.na(data$test)]
-data$test[is.na(data$test)] <- "NA"
-data$test
+ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_brewer(palette="BuPu")

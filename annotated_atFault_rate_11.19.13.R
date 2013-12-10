@@ -2,13 +2,14 @@ setwd('~/dataviz-fall-2013/bike-crash')
 
 data <- read.csv("bike_collision.csv", stringsAsFactors=F)
 
-data$newDate <- data$DATE
+data$newDate <- data$date
 
 #Reformat date into "date" and just make it a year only
-date$year <- format(as.Date(data$newDate, format="%m/%d/%y"), "%Y")
+data$year <- format(as.Date(data$newDate, format="%m/%d/%y"), "%Y")
 
 #make new column that's empty
 data$at.fault <- NA
+
 
 #fill new column with whether a biker or driver is at fault
 party_at_fault_2_indexes <- which(data$party.at.fault == 2)
@@ -17,6 +18,10 @@ data$at.fault[party_at_fault_2_indexes] <- data$Party.Type.2[party_at_fault_2_in
 
 party_at_fault_1_indexes <- which(data$party.at.fault == 1)
 data$at.fault[party_at_fault_1_indexes] <- data$Party.Type.1[party_at_fault_1_indexes]
+
+#THE PCT PLOT FAULT needs to add up to 100pct. NA's not represented - //NOW AGG!
+[is.na(data$at.fault)]
+data$at.fault[is.na(data$at.fault)] <- "NA"
 
 #aggregate the column of people at fault and years
 aggregate(data$at.fault, list(data$year, data$at.fault), length)
@@ -39,8 +44,9 @@ at_fault_pct <- merge(at_fault_agg, year_totals, by="year")
 at_fault_pct$pct <- at_fault_pct$fault/ at_fault_pct$total_crash
 #now plot like a boss
 ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", title="who is at fault for injury accidents") + geom_bar()
-#THE PCT PLOT FAULT needs to add up to 100pct. NA's not represented - //NOW AGG!
- data$at.fault.clean[is.na(data$at.fault.clean)] <- "NA"
+
+#plot with purple colors
+ggplot(data=at_fault_pct, aes(x=at_fault_pct$year, y=at_fault_pct$pct, fill=at_fault_pct$group), ylim=c(0,400), ylab="percent", xlab="year", col="") + geom_bar() + scale_fill_brewer(palette="BuPu")
 
 #subset 
 bikes <- subset(at_fault_agg, group=="Bicyclist")
