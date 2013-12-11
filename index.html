@@ -9,7 +9,55 @@
 	<script src="http://d3js.org/topojson.v1.min.js"></script>
 	<style type="text/css" media="screen">
 	
-	
+  body {
+    width:900px;
+    margin:20px auto;
+  }
+
+  .g-bar {
+    width:10px;
+    margin-right:10px;
+    height:20px;
+    float:left;
+  }
+
+   
+	.main-copy {
+    width: 350px;
+    float: left;
+    margin-right: auto;
+    font-family: "Helevetica Neue", sans-serif;
+    line-height: 25px; 
+    text-align: justify;
+  }
+  .main-map {
+    width: 75px;
+    float: left;
+  }
+
+  .bottom-section {
+    width: 600px;
+    margin: 0 auto;
+    /*border: solid 1px magenta;*/
+    /*overflow: hidden;*/
+  }
+
+  .g-bottom-chart {
+    margin-top:10px;
+    position:relative;
+  }
+
+  .g-bottom-chart .fatality-chart {
+    width: 100%;
+  }
+
+  .main-chart-section {
+    display: inline-block;
+    width: 100%;
+
+  }
+
+
 	.accident {
 		fill: orange;
 		stroke: magenta;
@@ -25,13 +73,38 @@
 		fill: red;
 		stroke: white;
 	}
+
+  .at-fault-img {
+    float:left;
+    width: 70%;
+    margin-top: 15px;
+
+
+  }
+
+  .years{
+    width: 72%;
+    float: left;
+    position: relative;
+    right: 10px;
+
+    
+  }
+
+  .percents{
+    position: relative;
+    width: 5.5%;
+    float: left;
+    padding-top: 7px;
+  }
 	
 		.my-legend {
 			position: absolute;
-			top: 550px;	
-			left: 775px;
+			top: 650px;
+      left: 755px;
 		
 	  	}
+
 	
 			.my-legend .legend-title {
 		    text-align: left;
@@ -51,17 +124,19 @@
 	    display: block;
 	    float: left;
 	    width: 50px;
-			
-	    margin-bottom: 6px;
-	    text-align: left;
-	    font-size: 60%;
+		  margin-bottom: 6px;
+	    text-align: center;
+	    font-size: 80%;
 	    list-style: none;
 	    }
+
+      .legend-labels {
+        padding:0;
+      }
 	  .my-legend ul.legend-labels li span {
 	    display: block;
-	    float: left;
+	    float: center;
 	    height: 15px;
-	    width: 50px;
 			font-size: 90%;
 			font-family: "Helevetica Neue", sans-serif;
 	    }
@@ -80,73 +155,206 @@
 	
 	#title{
 		color: steelblue;
-		font-size: 33px;
+		font-size: 40px;
 		font-family: "Helvetica Neue", sans-serif;
 		font-weight: 300;
 		letter-spacing: -1px;
+    text-align: center;
+
 
 	}
 	#title span{
-		/*left: 100px;*/
 		position: relative;
 		left: 150px;
-		/*width: 600px;
-				height: 100px;
-				left: 0px;*/
 	}
 		
 	#text{
 		font-family: "Helvetica Neue", sans-serif;
 		line-height: 25px;
 	}	
+
+
 	
 	#map1{
-		position: absolute;
-		top: 800px;
-		left: 850px;
-	}
-	
-	#map2{
 		display: inline-block;
-		float: left;
-		left: 50px;
+		margin-left: 110px;
 		
 	}
 	
+	#map1 img{
+		padding-top: 15px;
+
+	}
+	#title_map1{
+    font-size: 20px;
+		position: relative;
+		font-family: "Helvetica Neue", sans-serif;
+		font-weight: bold;
+		color: steelblue;
+		
+	}
+
+  p.fault-text {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 16px;
+    margin-top: -10px;
+    font-weight: 300;
+  }
+
+
+
+  #map2p{
+    margin-top: 10px;
+  }
+	
+	#title_map1 span{
+		font-weight: 300;
+		color: black;
+		font-size: 15px;
+	}
+	
+
+	.legend-map1{
+    width: 125px;
+    float: right;
+    position: relative;
+    bottom: 400px;
+    margin-right: 5px;
+    border: solid 1px black;
+	padding-left: 5px;
+	}
+	
+	.legend-map1 .legend-title{
+		font-family: "Helvetica Neue", sans-serif;
+        font-weight: 300;
+
+	}
+	
+	.legend-map1 .legend-scale ul{ 
+			list-style: none;
+	    }
+	
+	 .legend-map1 .legend-scale ul li{
+    float: left;
+    width: 217px;
+    font-family: "Helvetica Neue", sans-serif;
+    padding: 3px 0;	
+    font-weight: 300;	
+			
+	    }
+	
+	 .legend-map1 ul.legend-labels li span{
+	 	 			/*display: block;
+	 	 			float: center;*/
+	 	 	    height: 40px;
+	 	 	    width: 50px;
+		 	    /*vertical-align: middle;
+		 	    					*/
+	 	 	}
+	
+	
+	#map2{
+		display: block;
+		float: left;	
+	}
+	
 	#title_map2{
+    font-size: 20px;
 		font-family:"Helvetica Neue", sans-serif;
 		font-weight: bold;
-		left: 50px;
 		position: relative;
 		color: steelblue;
+    margin: 0;
+
 	}
 	
 	#graycrosses{
+    position: relative;
+    font-family:"Helvetica Neue", sans-serif;
 		font-weight: 300;
-		font-size: 15px;
+		font-size: 16px;
 		color: black;
+
 	}
 	#circles{
 		color:#a82e55 ;
 	}
+
+
 		
+
+
 	</style>
 </head>
 <body>
 	
-	<div class="words">
-		<h1 id="title">San Francisco Bicycle Injury Accidents<span><br> 2000 - 2011</br></span> </h1> 
-		<p id="text">The number of bicycle-injury accidents in San Francisco increased 55 percent between 2000 and 2011 with the highest number of crashes occurring in 2010 with 629. Most of the crashes occurred on Market, Mission and Valencia streets. Crashes occurred most often at intersections and during commuting hours around 8:30 a.m. or 6 p.m. <br><br>
+	<div class="main">
+		<h1 id="title">San Francisco Bicycle-Injury Crashes 2000 - 2011 </h1> 
 
-		Of the 5133 crashes recorded during this time period, 26 resulted in fatalities. <br><br>
+    <div class="main-chart-section">
+    <div class="main-copy">
+      <p>The number of bicycle-injury accidents in San Francisco increased 55 percent between 2000 and 2011 with the highest number of crashes occurring in 2010 with 629. Most of the crashes occurred on Market, Mission and Valencia streets. Crashes occurred most often at intersections and during commuting hours around 8:30 a.m. or 6 p.m.</p> 
 
-		Crashes occurred slightly more frequently on Thursday than any other day of the week and more often than not, on clear or slightly cloudy days with normal road conditions. <br><br>
+      <p>Of the 5133 crashes recorded during this time period, 26 resulted in fatalities.</p> 
 
-		About half of the time, bicyclists are at fault for the crash. The other half, drivers are at fault. Below is graph showing the percent change of who is at fault in bicycle-injury crashes, according to data compiled from San Francisco police reports. 
-		 </p>
-	</div>
+      <p>Crashes occurred slightly more frequently on Thursday than any other day of the week and more often than not, on clear or slightly cloudy days with normal road conditions.</p> 
+
+      <p>About half of the time, bicyclists are at fault for the crash. The other half, drivers are at fault. Below is graph showing the percent change of who is at fault in bicycle-injury crashes, according to data compiled from San Francisco police reports.</p>
+    </div>
+      <div class="main-map">
+        <div class="my-legend">
+          <div class='legend-title'>Number of crashes</div>
+          <div class='legend-scale'>
+            <ul class='legend-labels'>
+              <li><span style='background:#4880b2;'></span>0</li>
+              <li><span style='background:#5377a8;'></span>20</li>
+              <li><span style='background:#616b9a;'></span>40</li>
+              <li><span style='background:#6e608d;'></span>60</li>
+              <li><span style='background:#7b5581;'></span>80</li> 
+              <li><span style='background:#894873;'></span>100</li>
+              <li><span style='background:#973c65;'></span>120</li>
+              <li><span style='background:#9e365e;'></span>130</li>
+              <li><span style='background:#a82e55;'></span>150</li>
+              </ul>
+            </div>
+        </div>  
+      </div>
+
+      </div>
+
+      <div class="bottom-section">
+      <div class="fatalaties-map g-bottom-chart">
+        <p id="title_map2"> Bicycle Fatalities </p>
+        <p id="map2p"><span id="graycrosses"> The gray crosses represent all of the San Francisco bicycle-injury crashes between 2000 and 2011. 
+        The <span id="circles">red circles</span> indicate the crashes that resulted in a fatality. </span></p> 
+        <img class="fatality-chart" src="maps/Bicycle Fatalities Mapped copy.png" alt="Bicycle Fatalities Mapped">
+      </div>
+
+      <div class="fault-map g-bottom-chart">
+        <p id="title_map1">Who's at fault?<p class="fault-text">This graph shows the percent change of who is at fault in bicycle-injury accidents</p>
+        <img class="percents" src="maps/percents.jpg" alt="percents">
+        <img class="at-fault-img" src="maps/map_at_fault_new.png"  alt="Map At Fault New">
+        <img class="years" src="maps/years_atfault_map.png" alt="years_atfault_map">
+        
+        <div class="legend-map1">
+          <div class="legend-title">Person at fault</div>
+          <div class="legend-scale">
+            <ul class="legend-labels">
+              <li><div class="g-bar" style='background:#244059;'></div>Pedestrian</li>
+			  <li><div class="g-bar" style='background:#325A7D;'></div>Parked Vehicle</li>
+			  <li><div class="g-bar" style='background:#4880b2;'></div>Other</li>
+			  <li><div class="g-bar" style='background:#6e608d;'></div>Not Stated</li>
+			  <li><div class="g-bar" style='background:#7b5581;'></div>NA</li>
+			  <li><div class="g-bar" style='background:#81405D;'></div>Driver</li>
+              <li><div class="g-bar" style='background:#E3BCC9;'></div>Bicyclists</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
 	
-	<script type="text/javascript" charset="utf-8">
+<script type="text/javascript" charset="utf-8">
 		
 var margin = {top: 20, right: 20, bottom: 20, left: 20}
 		width  = 750 - margin.left - margin.right, 
@@ -166,15 +374,15 @@ var radius = d3.scale.sqrt()
 		.domain([0, 50])
 		.range([0, 8]);	
 
-var projection = d3.geo.albers()
-	  .scale(1000)
-	  .translate([width / 2, height / 2])
-	  .precision(.1);
-		
-var path = d3.geo.path()
-		.projection(projection);	
+// var projection = d3.geo.albers()
+// 	  .scale(1000)
+// 	  .translate([width / 2, height / 2])
+// 	  .precision(.1);
+// 		
+// var path = d3.geo.path()
+// 		.projection(projection);	
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select(".main-map").append("svg")
 		.attr("width", width)
 		.attr("height", height)
 		.append('g')
@@ -191,7 +399,7 @@ function ready (error, bike, sf) {
   var projection = d3.geo.mercator()
 		  .translate([width / 2, height / 2])
 			.center([-122.4453, 37.7422])
-		  .scale(200000);
+		  .scale(225000);
 		
 	bike.forEach(function(d) {
 		d.lat = +d.lat;
@@ -228,41 +436,15 @@ function ready (error, bike, sf) {
 						.attr("class", "hexagon")
 						.attr('d', function (d) {return hexbin.hexagon(radius(d.length));})
 						.attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")";})
-						.on("mouseover", function(d) { console.log(d.length); })	
-						.style("fill", function(d) {return color( d.length ); })
+            .style("fill", function(d) {return color( d.length ); })
+            .append("title")
+              .text(function(d) { return d.length + " accidents"; })
 }
 
 </script>
 
 	
 
-<div class="my-legend">
-	<div class='legend-title'>Number of crashes</div>
-	<div class='legend-scale'>
-	  <ul class='legend-labels'>
-	    <li><span style='background:#4880b2;'></span>0</li>
-			<li><span style='background:#5377a8;'></span>20</li>
-			<li><span style='background:#616b9a;'></span>40</li>
-	    <li><span style='background:#6e608d;'></span>60</li>
-	    <li><span style='background:#7b5581;'></span>80</li> 
-	   	<li><span style='background:#894873;'></span>100</li>
-			<li><span style='background:#973c65;'></span>120</li>
-	    <li><span style='background:#9e365e;'></span>130</li>
-			<li><span style='background:#a82e55;'></span>150</li>
-	  </ul>
-	</div>
-</div>	
-
-<div id="map1"> 
-	<img src="maps/20131209_AtFault_Final.png" width="400" height="400" alt="20131209 AtFault Final">
-	<img src="maps/legend_at_Fault_rate.png" width="150" height="200" alt="Legend At Fault Rate">
-</div>
-
-<div id="map2">
-	<p id="title_map2"> Bicycle Fatalities <br><span id="graycrosses"> The gray crosses represent all of the San Francisco bicycle-injury crashes between 2000 and 2011. 
-		<br>The <span	id="circles">red circles</span> indicate the crashes that resulted in a fatality. </span></p> 
-	<img src="maps/Bicycle Fatalities Mapped copy.png" width="660" height="630" alt="Bicycle Fatalities Mapped Copy">
-</div>
 	
 		
 	
